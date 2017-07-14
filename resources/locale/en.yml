@@ -1,0 +1,6 @@
+flagrow-subscribed:
+    forum:
+        settings:
+            notify_discussion_created_label: Someone creates a discussion
+        notifications:
+            discussion_created_text: "{username} created"

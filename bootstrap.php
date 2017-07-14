@@ -1,9 +1,11 @@
 <?php
 
-namespace Flagrow\AutoConfirmFix;
+namespace Flagrow\Subscribed;
 
 use Illuminate\Contracts\Events\Dispatcher;
 
 return function(Dispatcher $events) {
-    $events->subscribe(Listeners\PreventsException::class);
+    $events->subscribe(Listeners\AddClientAssets::class);
+
+    $events->subscribe(Listeners\DiscussionCreated::class);
 };
