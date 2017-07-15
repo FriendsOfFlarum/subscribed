@@ -69,7 +69,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getEmailView()
     {
-        // TODO: Implement getEmailView() method.
+        return ['text' => 'flagrow-subscribed::emails.discussionCreated'];
     }
 
     /**
@@ -79,6 +79,6 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getEmailSubject()
     {
-        // TODO: Implement getEmailSubject() method.
+        return $this->post->discussion;
     }
 }
