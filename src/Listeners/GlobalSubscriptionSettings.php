@@ -28,6 +28,25 @@ class GlobalSubscriptionSettings
         $events->listen(PrepareApiAttributes::class, [$this, 'inject']);
 
         $events->listen(UserWasRegistered::class, [$this, 'setDefaults']);
+        $events->listen(UserWillBeSaved::class, [$this, 'forced']);
+    }
+
+    public function forced(UserWillBeSaved $event)
+    {
+        foreach ($this->settings->all() as $key => $value) {
+
+            if (!Str::startsWith($key, 'flagrow.subscribed.')) {
+                continue;
+            }
+
+            $forced = $this->isSubscribedSetting($key, 'forced');
+
+            if (!$forced) {
+                continue;
+            }
+
+            $event->user->setPreference($forced, $value);
+        }
     }
 
     public function save(UserWillBeSaved $event)
@@ -39,6 +58,8 @@ class GlobalSubscriptionSettings
         $preferences = Arr::get($event->data, 'attributes.preferences', []);
 
         foreach ($preferences as $key => $value) {
+
+            // Drop any submitted value actually a user preference.
             if (!$this->isSubscribedSetting($key)) {
                 unset($preferences[$key]);
             }
@@ -75,26 +96,33 @@ class GlobalSubscriptionSettings
 
     public function setDefaults(UserWasRegistered $event)
     {
-        foreach ($this->settings->all() as $setting => $value) {
+        foreach ($this->settings->all() as $key => $value) {
 
-            if (!Str::startsWith($setting, 'flagrow.subscribed.')) {
+            if (!Str::startsWith($key, 'flagrow.subscribed.')) {
                 continue;
             }
 
-            if (!preg_match('/^flagrow\.subscribed\.(?<set>.*)_defaults$/', $setting, $m)) {
+            $forced = $this->isSubscribedSetting($key, 'forced');
+            $default = $this->isSubscribedSetting($key, 'defaults');
+
+            if (!$forced && !$default) {
                 continue;
             }
 
-            $setting = $m['set'];
-
-            if ($event->user->getPreference($setting, null) === null) {
-                $event->user->setPreference($setting, $value);
-            }
+            $event->user->setPreference($forced ? $forced : $default, $value);
         }
+
+        $event->user->save();
     }
 
-    protected function isSubscribedSetting($setting)
+    protected function isSubscribedSetting($setting, $type = null)
     {
-        return preg_match('/^notify_[^_]+_[^_]+_(forced|defaults)$/', $setting);
+        if ($type === null) {
+            $type = 'forced|defaults';
+        }
+
+        $matched = preg_match('/^(flagrow\.subscribed\.)?(?<set>notify_.*)_('. $type .')$/', $setting, $m);
+
+        return $matched !== 1 ? false : $m['set'];
     }
 }
