@@ -1,4 +1,7 @@
-export default function (items) {
+import DiscussionCreatedNotification from 'flagrow/subscribed/notification/DiscussionCreatedNotification';
+
+export default function (items, app) {
+    app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
 
     items.add('discussionCreated', {
         name: 'discussionCreated',

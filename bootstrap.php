@@ -9,6 +9,7 @@ return function(Dispatcher $events, Factory $views) {
     $events->subscribe(Listeners\AddClientAssets::class);
 
     $events->subscribe(Listeners\DiscussionCreated::class);
+    $events->subscribe(Listeners\UserCreated::class);
 
     $views->addNamespace('flagrow-subscribed', __DIR__.'/resources/views');
 };

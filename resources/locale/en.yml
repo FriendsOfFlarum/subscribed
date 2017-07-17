@@ -2,5 +2,10 @@ flagrow-subscribed:
     forum:
         settings:
             notify_discussion_created_label: Someone creates a discussion
+            notify_user_created_label: When someone registers
         notifications:
             discussion_created_text: "{username} created"
+            user_created_text: "New user {username}"
+    admin:
+        menu:
+            description: Configure (default) user subscriptions

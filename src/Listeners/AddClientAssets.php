@@ -23,11 +23,16 @@ class AddClientAssets
         if ($app->isForum()) {
             $app->addAssets([
                 __DIR__ . '/../../js/forum/dist/extension.js',
-//                __DIR__ . '/../../resources/less/forum.less'
             ]);
 
-            $app->addBootstrapper('flagrow/subscribed/main');
         }
+        if ($app->isAdmin()) {
+            $app->addAssets([
+                __DIR__ . '/../../js/admin/dist/extension.js',
+            ]);
+
+        }
+        $app->addBootstrapper('flagrow/subscribed/main');
     }
 
     /**
