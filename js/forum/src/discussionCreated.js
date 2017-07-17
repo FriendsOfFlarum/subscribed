@@ -1,4 +1,4 @@
-import DiscussionCreatedNotification from 'flagrow/subscribed/notification/DiscussionCreatedNotification';
+import DiscussionCreatedNotification from 'flagrow/subscribed/notifications/DiscussionCreatedNotification';
 
 export default function (items, app) {
     app.notificationComponents.discussionCreated = DiscussionCreatedNotification;

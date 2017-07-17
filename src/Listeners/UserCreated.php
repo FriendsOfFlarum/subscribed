@@ -7,7 +7,6 @@ use Flarum\Api\Serializer\UserBasicSerializer;
 use Flarum\Core\Notification\NotificationSyncer;
 use Flarum\Core\User;
 use Flarum\Event\ConfigureNotificationTypes;
-use Flarum\Event\DiscussionWasDeleted;
 use Flarum\Event\UserWasDeleted;
 use Flarum\Event\UserWasRegistered;
 use Illuminate\Contracts\Events\Dispatcher;

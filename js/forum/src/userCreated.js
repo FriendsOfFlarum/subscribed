@@ -1,4 +1,4 @@
-import UserCreatedNotification from 'flagrow/subscribed/notification/UserCreatedNotification';
+import UserCreatedNotification from 'flagrow/subscribed/notifications/UserCreatedNotification';
 
 export default function (items, app) {
     app.notificationComponents.userCreated = UserCreatedNotification;
