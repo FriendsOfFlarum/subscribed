@@ -21,10 +21,10 @@ System.register('flagrow/subscribed/discussionCreated', [], function (_export, _
 });;
 'use strict';
 
-System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/NotificationGrid', 'flagrow/subscribed/discussionCreated'], function (_export, _context) {
+System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/NotificationGrid', 'flagrow/subscribed/discussionCreated', 'flagrow/subscribed/notification/DiscussionCreatedNotification'], function (_export, _context) {
     "use strict";
 
-    var extend, NotificationGrid, discussionCreated;
+    var extend, NotificationGrid, discussionCreated, DiscussionCreatedNotification;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
@@ -32,10 +32,14 @@ System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/
             NotificationGrid = _flarumComponentsNotificationGrid.default;
         }, function (_flagrowSubscribedDiscussionCreated) {
             discussionCreated = _flagrowSubscribedDiscussionCreated.default;
+        }, function (_flagrowSubscribedNotificationDiscussionCreatedNotification) {
+            DiscussionCreatedNotification = _flagrowSubscribedNotificationDiscussionCreatedNotification.default;
         }],
         execute: function () {
 
             app.initializers.add('flagrow-subscribed', function (app) {
+                app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
+
                 extend(NotificationGrid.prototype, 'notificationTypes', function (items) {
 
                     items = discussionCreated(items);
@@ -68,19 +72,20 @@ System.register('flagrow/subscribed/notification/DiscussionCreatedNotification',
                 babelHelpers.createClass(DiscussionCreatedNotification, [{
                     key: 'icon',
                     value: function icon() {
-                        return 'pencil';
+                        // Same as create discussion button on purpose.
+                        return 'edit';
                     }
                 }, {
                     key: 'href',
                     value: function href() {
                         var notification = this.props.notification;
 
-                        return app.route.discussion(notification.subject(), notification.content().postNumber);
+                        return app.route.discussion(notification.subject());
                     }
                 }, {
                     key: 'content',
                     value: function content() {
-                        return app.translator.trans('flarum-subscribed.forum.notifications.discussion_created_text', { user: this.props.notification.sender() });
+                        return app.translator.trans('flagrow-subscribed.forum.notifications.discussion_created_text', { user: this.props.notification.sender() });
                     }
                 }]);
                 return DiscussionCreatedNotification;

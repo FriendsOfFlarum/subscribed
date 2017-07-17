@@ -5,21 +5,20 @@ namespace Flagrow\Subscribed\Blueprints;
 use Flarum\Core\Discussion;
 use Flarum\Core\Notification\BlueprintInterface;
 use Flarum\Core\Notification\MailableInterface;
-use Flarum\Lock\Post\DiscussionLockedPost;
 
 class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
     /**
-     * @var DiscussionLockedPost
+     * @var Discussion
      */
-    protected $post;
+    public $discussion;
 
     /**
-     * @param DiscussionLockedPost $post
+     * @param Discussion $discussion
      */
-    public function __construct(DiscussionLockedPost $post)
+    public function __construct(Discussion $discussion)
     {
-        $this->post = $post;
+        $this->discussion = $discussion;
     }
 
     /**
@@ -27,7 +26,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getSender()
     {
-        return $this->post->user;
+        return $this->discussion->startUser;
     }
 
     /**
@@ -35,7 +34,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getSubject()
     {
-        return $this->post->discussion;
+        return $this->discussion;
     }
 
     /**
@@ -43,7 +42,6 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getData()
     {
-        return ['postNumber' => (int) $this->post->number];
     }
 
     /**
@@ -79,6 +77,6 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getEmailSubject()
     {
-        return $this->post->discussion;
+        return $this->discussion->title;
     }
 }
