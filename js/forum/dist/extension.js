@@ -26,10 +26,10 @@ System.register('flagrow/subscribed/discussionCreated', ['flagrow/subscribed/not
 });;
 'use strict';
 
-System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/NotificationGrid', 'flagrow/subscribed/discussionCreated', 'flagrow/subscribed/userCreated'], function (_export, _context) {
+System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/NotificationGrid', 'flagrow/subscribed/discussionCreated', 'flagrow/subscribed/userCreated', 'flarum/components/Checkbox'], function (_export, _context) {
     "use strict";
 
-    var extend, NotificationGrid, discussionCreated, userCreated;
+    var extend, NotificationGrid, discussionCreated, userCreated, Checkbox;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
@@ -39,6 +39,8 @@ System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/
             discussionCreated = _flagrowSubscribedDiscussionCreated.default;
         }, function (_flagrowSubscribedUserCreated) {
             userCreated = _flagrowSubscribedUserCreated.default;
+        }, function (_flarumComponentsCheckbox) {
+            Checkbox = _flarumComponentsCheckbox.default;
         }],
         execute: function () {
 
@@ -49,6 +51,57 @@ System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/
                     items = userCreated(items, app);
 
                     return items;
+                });
+
+                extend(NotificationGrid.prototype, 'init', function () {
+                    var _this = this;
+
+                    var adds = [];
+
+                    this.methods.forEach(function (type) {
+                        adds.push({
+                            parent: type.name,
+                            name: type.name + '_defaults',
+                            icon: type.icon,
+                            label: app.translator.trans('flagrow-subscribed.forum.settings.defaults_label', { setting: type.label })
+                        });
+                        adds.push({
+                            parent: type.name,
+                            name: type.name + '_forced',
+                            icon: type.icon,
+                            label: app.translator.trans('flagrow-subscribed.forum.settings.forced_label', { setting: type.label })
+                        });
+                    });
+
+                    this.types.forEach(function (type) {
+                        adds.forEach(function (method) {
+                            var parent = _this.preferenceKey(type.name, method.parent);
+                            var key = _this.preferenceKey(type.name, method.name);
+                            var preference = _this.props.user.preferences()[key];
+                            var parentPreference = _this.props.user.preferences()[parent];
+
+                            _this.inputs[key] = new Checkbox({
+                                state: !!preference,
+                                disabled: typeof parentPreference === 'undefined',
+                                onchange: function onchange() {
+                                    return _this.toggle([key]);
+                                }
+                            });
+                        });
+                    });
+
+                    this.methods = this.methods.concat(adds);
+
+                    this.methods.sort(function (a, b) {
+                        if (a.name < b.name) {
+                            return -1;
+                        }
+                        if (a.name > b.name) {
+                            return 1;
+                        }
+
+                        return 0;
+                    });
                 });
             });
         }
