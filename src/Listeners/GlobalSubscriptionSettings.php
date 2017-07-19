@@ -2,6 +2,7 @@
 
 namespace Flagrow\Subscribed\Listeners;
 
+use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Event\PrepareApiAttributes;
 use Flarum\Event\UserWasRegistered;
 use Flarum\Event\UserWillBeSaved;
@@ -77,7 +78,7 @@ class GlobalSubscriptionSettings
 
     public function inject(PrepareApiAttributes $event)
     {
-        if (!$event->actor->isAdmin()) {
+        if (!$event->actor || !$event->actor->isAdmin() || !$event->isSerializer(ForumSerializer::class)) {
             return;
         }
 
