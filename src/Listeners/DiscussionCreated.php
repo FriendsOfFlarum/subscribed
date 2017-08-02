@@ -65,6 +65,11 @@ class DiscussionCreated
             ->where('preferences', 'regexp', new Expression('\'"notify_discussionCreated_[a-z]+":true\''))
             ->get();
 
+        $notify = $notify->filter(function (User $recipient) use ($discussion) {
+            return $recipient->can('subscribeDiscussionCreated') &&
+                $recipient->can('viewDiscussions', $discussion);
+        });
+
         $this->notifications->sync(
             $this->getNotification($event->discussion),
             $notify->all()

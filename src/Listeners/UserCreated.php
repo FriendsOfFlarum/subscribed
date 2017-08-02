@@ -59,8 +59,13 @@ class UserCreated
 
         $notify = User::query()
             ->where('users.id', '!=', $user->id)
+            ->where('users.is_activated', '=', 1)
             ->where('preferences', 'regexp', new Expression('\'"notify_userCreated_[a-z]+":true\''))
             ->get();
+
+        $notify = $notify->filter(function (User $recipient) {
+            return $recipient->can('subscribeUserCreated');
+        });
 
         $this->notifications->sync(
             $this->getNotification($user),
