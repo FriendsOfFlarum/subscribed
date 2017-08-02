@@ -2,24 +2,27 @@
 
 [![Support on patreon](https://img.shields.io/badge/support%20on-patreon-orange.svg)](https://patreon.com/flagrow) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/flagrow/subscribed/license.md) [![Latest Stable Version](https://img.shields.io/packagist/v/flagrow/subscribed.svg)](https://github.com/flagrow/subscribed) [![Total Downloads](https://img.shields.io/packagist/dt/flagrow/subscribed.svg)](https://github.com/flagrow/subscribed)
 
-Adds additional subscriptions to specific events and allows enforcing them.
+Adds additional subscriptions to specific events.
 
 ### installation
 
+Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually:
+
 ```bash
-composer require flagrow/subscribed
+composer require flagrow/subscribed --prefer-dist --no-dev -o
 ```
 
 ### updating
 
 ```bash
-composer update flagrow/subscribed
+composer update flagrow/subscribed --prefer-dist --no-dev -o
 php flarum cache:clear
 ```
 
 ### configuration
 
-Enable the extension. Visit the subscribed tab in the admin to configure subscriptions. 
+Enable the extension. Visit the permissions tab in the admin to configure who can enable subscriptions to specific
+events. 
 
 ### links
 
@@ -30,11 +33,3 @@ Enable the extension. Visit the subscribed tab in the admin to configure subscri
 
 
 An extension by [Flagrow](https://flagrow.io), a project of [Gravure](https://gravure.io).
-
-### faq
-
-- In case you've used [the solution by anthonyrossbach](https://discuss.flarum.org/d/5179-enable-all-email-notifications-upon-registration/6), you have to undo
-the added trigger:
-```sql
-DROP TRIGGER `users_insert`;
-```
