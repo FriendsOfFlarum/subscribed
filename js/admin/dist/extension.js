@@ -1,111 +1,84 @@
 "use strict";
 
-System.register("flagrow/subscribed/addSubscriptionPane", ["flarum/extend", "flarum/components/AdminNav", "flarum/components/AdminLinkButton", "flagrow/subscribed/panes/SubscriptionPane"], function (_export, _context) {
+System.register("flagrow/subscribed/addPermissions", ["flarum/extend", "flarum/components/PermissionGrid", "flagrow/subscribed/permissions/discussionCreated", "flagrow/subscribed/permissions/userCreated"], function (_export, _context) {
     "use strict";
 
-    var extend, AdminNav, AdminLinkButton, SubscriptionPane;
+    var extend, PermissionGrid, discussionCreated, userCreated;
 
     _export("default", function () {
-        // create the route
-        app.routes['flagrow-subscribed-configure-subscriptions'] = { path: '/flagrow/subscribed/configure', component: SubscriptionPane.component() };
-
-        // bind the route we created to the three dots settings button
-        app.extensionSettings['flagrow-subscribed'] = function () {
-            return m.route(app.route('flagrow-subscribed-configure-subscriptions'));
-        };
-
-        extend(AdminNav.prototype, 'items', function (items) {
-            // add the Image Upload tab to the admin navigation menu
-            items.add('flagrow-subscribed-configure-subscriptions', AdminLinkButton.component({
-                href: app.route('flagrow-subscribed-configure-subscriptions'),
-                icon: 'reply-all',
-                children: 'Subscribed',
-                description: app.translator.trans('flagrow-subscribed.admin.menu.description')
-            }));
+        extend(PermissionGrid.prototype, 'startItems', function (items) {
+            discussionCreated(items);
+            userCreated(items);
         });
+        extend(PermissionGrid.prototype, 'moderateItems', function (items) {});
     });
 
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
-        }, function (_flarumComponentsAdminNav) {
-            AdminNav = _flarumComponentsAdminNav.default;
-        }, function (_flarumComponentsAdminLinkButton) {
-            AdminLinkButton = _flarumComponentsAdminLinkButton.default;
-        }, function (_flagrowSubscribedPanesSubscriptionPane) {
-            SubscriptionPane = _flagrowSubscribedPanesSubscriptionPane.default;
+        }, function (_flarumComponentsPermissionGrid) {
+            PermissionGrid = _flarumComponentsPermissionGrid.default;
+        }, function (_flagrowSubscribedPermissionsDiscussionCreated) {
+            discussionCreated = _flagrowSubscribedPermissionsDiscussionCreated.default;
+        }, function (_flagrowSubscribedPermissionsUserCreated) {
+            userCreated = _flagrowSubscribedPermissionsUserCreated.default;
         }],
         execute: function () {}
     };
 });;
 'use strict';
 
-System.register('flagrow/subscribed/main', ['flarum/extend', 'flagrow/subscribed/addSubscriptionPane'], function (_export, _context) {
+System.register('flagrow/subscribed/main', ['flarum/extend', 'flagrow/subscribed/addPermissions'], function (_export, _context) {
     "use strict";
 
-    var extend, addSubscriptionPane;
+    var extend, addPermissions;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
-        }, function (_flagrowSubscribedAddSubscriptionPane) {
-            addSubscriptionPane = _flagrowSubscribedAddSubscriptionPane.default;
+        }, function (_flagrowSubscribedAddPermissions) {
+            addPermissions = _flagrowSubscribedAddPermissions.default;
         }],
         execute: function () {
 
             app.initializers.add('flagrow-subscribed', function (app) {
-                addSubscriptionPane();
+                addPermissions();
             });
         }
     };
 });;
-"use strict";
+'use strict';
 
-System.register("flagrow/subscribed/panes/SubscriptionPane", ["flarum/Component", "flarum/components/Switch", "flarum/components/Button", "flarum/utils/saveSettings"], function (_export, _context) {
-  "use strict";
+System.register('flagrow/subscribed/permissions/discussionCreated', [], function (_export, _context) {
+    "use strict";
 
-  var Component, Switch, Button, saveSettings, SubscriptionPane;
-  return {
-    setters: [function (_flarumComponent) {
-      Component = _flarumComponent.default;
-    }, function (_flarumComponentsSwitch) {
-      Switch = _flarumComponentsSwitch.default;
-    }, function (_flarumComponentsButton) {
-      Button = _flarumComponentsButton.default;
-    }, function (_flarumUtilsSaveSettings) {
-      saveSettings = _flarumUtilsSaveSettings.default;
-    }],
-    execute: function () {
-      SubscriptionPane = function (_Component) {
-        babelHelpers.inherits(SubscriptionPane, _Component);
+    _export('default', function (items) {
+        items.add('subscribeDiscussionCreated', {
+            icon: 'bell',
+            label: app.translator.trans('flagrow-subscribed.admin.permission.subscribe_to_discussion_created'),
+            permission: 'subscribeDiscussionCreated'
+        }, 95);
+    });
 
-        function SubscriptionPane() {
-          babelHelpers.classCallCheck(this, SubscriptionPane);
-          return babelHelpers.possibleConstructorReturn(this, (SubscriptionPane.__proto__ || Object.getPrototypeOf(SubscriptionPane)).apply(this, arguments));
-        }
+    return {
+        setters: [],
+        execute: function () {}
+    };
+});;
+'use strict';
 
-        babelHelpers.createClass(SubscriptionPane, [{
-          key: "init",
-          value: function init() {}
-        }, {
-          key: "config",
-          value: function config() {}
-        }, {
-          key: "view",
-          value: function view() {
-            return m('div', { className: 'Flagrow--Subscriptions' }, []);
-          }
-        }, {
-          key: "updateSetting",
-          value: function updateSetting(prop, setting, value) {
-            saveSettings(babelHelpers.defineProperty({}, setting, value));
+System.register('flagrow/subscribed/permissions/userCreated', [], function (_export, _context) {
+    "use strict";
 
-            prop(value);
-          }
-        }]);
-        return SubscriptionPane;
-      }(Component);
+    _export('default', function (items) {
+        items.add('subscribeUserCreated', {
+            icon: 'bell',
+            label: app.translator.trans('flagrow-subscribed.admin.permission.subscribe_to_user_created'),
+            permission: 'subscribeUserCreated'
+        }, 95);
+    });
 
-      _export("default", SubscriptionPane);
-    }
-  };
+    return {
+        setters: [],
+        execute: function () {}
+    };
 });

@@ -1,120 +1,18 @@
 'use strict';
 
-System.register('flagrow/subscribed/discussionCreated', ['flagrow/subscribed/notifications/DiscussionCreatedNotification'], function (_export, _context) {
+System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/NotificationGrid', 'flagrow/subscribed/subscriptions/discussionCreated', 'flagrow/subscribed/subscriptions/userCreated'], function (_export, _context) {
     "use strict";
 
-    var DiscussionCreatedNotification;
-
-    _export('default', function (items, app) {
-        app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
-
-        items.add('discussionCreated', {
-            name: 'discussionCreated',
-            icon: 'pencil',
-            label: app.translator.trans('flagrow-subscribed.forum.settings.notify_discussion_created_label')
-        }, 5);
-
-        return items;
-    });
-
-    return {
-        setters: [function (_flagrowSubscribedNotificationsDiscussionCreatedNotification) {
-            DiscussionCreatedNotification = _flagrowSubscribedNotificationsDiscussionCreatedNotification.default;
-        }],
-        execute: function () {}
-    };
-});;
-'use strict';
-
-System.register('flagrow/subscribed/extendsNotificationGrid', ['flarum/extend', 'flarum/components/NotificationGrid', 'flarum/components/Checkbox'], function (_export, _context) {
-    "use strict";
-
-    var extend, NotificationGrid, Checkbox;
-
-    _export('default', function (app) {
-        extend(NotificationGrid.prototype, 'init', function () {
-            var _this = this;
-
-            var adds = [];
-
-            this.methods.forEach(function (type) {
-                adds.push({
-                    parent: type.name,
-                    name: type.name + '_defaults',
-                    icon: type.icon,
-                    label: app.translator.trans('flagrow-subscribed.forum.settings.defaults_label', { setting: type.label })
-                });
-                adds.push({
-                    parent: type.name,
-                    name: type.name + '_forced',
-                    icon: type.icon,
-                    label: app.translator.trans('flagrow-subscribed.forum.settings.forced_label', { setting: type.label })
-                });
-            });
-
-            this.types.forEach(function (type) {
-                adds.forEach(function (method) {
-                    var parent = _this.preferenceKey(type.name, method.parent);
-                    var key = _this.preferenceKey(type.name, method.name);
-                    var preference = app.forum.attribute('flagrow.subscribed.' + key);
-
-                    // "flagrow.subscribed.notify_postMentioned_alert_defaults"
-
-                    var parentPreference = _this.props.user.preferences()[parent];
-
-                    _this.inputs[key] = new Checkbox({
-                        state: !!preference,
-                        disabled: typeof parentPreference === 'undefined',
-                        onchange: function onchange() {
-                            return _this.toggle([key]);
-                        }
-                    });
-                });
-            });
-
-            this.methods = this.methods.concat(adds);
-
-            this.methods.sort(function (a, b) {
-                if (a.name < b.name) {
-                    return -1;
-                }
-                if (a.name > b.name) {
-                    return 1;
-                }
-
-                return 0;
-            });
-        });
-    });
-
+    var extend, NotificationGrid, discussionCreated, userCreated;
     return {
         setters: [function (_flarumExtend) {
             extend = _flarumExtend.extend;
         }, function (_flarumComponentsNotificationGrid) {
             NotificationGrid = _flarumComponentsNotificationGrid.default;
-        }, function (_flarumComponentsCheckbox) {
-            Checkbox = _flarumComponentsCheckbox.default;
-        }],
-        execute: function () {}
-    };
-});;
-'use strict';
-
-System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/NotificationGrid', 'flagrow/subscribed/discussionCreated', 'flagrow/subscribed/userCreated', 'flagrow/subscribed/extendsNotificationGrid'], function (_export, _context) {
-    "use strict";
-
-    var extend, NotificationGrid, discussionCreated, userCreated, extendsNotificationGrid;
-    return {
-        setters: [function (_flarumExtend) {
-            extend = _flarumExtend.extend;
-        }, function (_flarumComponentsNotificationGrid) {
-            NotificationGrid = _flarumComponentsNotificationGrid.default;
-        }, function (_flagrowSubscribedDiscussionCreated) {
-            discussionCreated = _flagrowSubscribedDiscussionCreated.default;
-        }, function (_flagrowSubscribedUserCreated) {
-            userCreated = _flagrowSubscribedUserCreated.default;
-        }, function (_flagrowSubscribedExtendsNotificationGrid) {
-            extendsNotificationGrid = _flagrowSubscribedExtendsNotificationGrid.default;
+        }, function (_flagrowSubscribedSubscriptionsDiscussionCreated) {
+            discussionCreated = _flagrowSubscribedSubscriptionsDiscussionCreated.default;
+        }, function (_flagrowSubscribedSubscriptionsUserCreated) {
+            userCreated = _flagrowSubscribedSubscriptionsUserCreated.default;
         }],
         execute: function () {
 
@@ -126,8 +24,6 @@ System.register('flagrow/subscribed/main', ['flarum/extend', 'flarum/components/
 
                     return items;
                 });
-
-                extendsNotificationGrid(app);
             });
         }
     };
@@ -224,19 +120,49 @@ System.register('flagrow/subscribed/notifications/UserCreatedNotification', ['fl
 });;
 'use strict';
 
-System.register('flagrow/subscribed/userCreated', ['flagrow/subscribed/notifications/UserCreatedNotification'], function (_export, _context) {
+System.register('flagrow/subscribed/subscriptions/discussionCreated', ['flagrow/subscribed/notifications/DiscussionCreatedNotification'], function (_export, _context) {
+    "use strict";
+
+    var DiscussionCreatedNotification;
+
+    _export('default', function (items, app) {
+        if (app.forum.data.attributes.subscribeDiscussionCreated) {
+            app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
+
+            items.add('discussionCreated', {
+                name: 'discussionCreated',
+                icon: 'pencil',
+                label: app.translator.trans('flagrow-subscribed.forum.settings.notify_discussion_created_label')
+            }, 5);
+        }
+
+        return items;
+    });
+
+    return {
+        setters: [function (_flagrowSubscribedNotificationsDiscussionCreatedNotification) {
+            DiscussionCreatedNotification = _flagrowSubscribedNotificationsDiscussionCreatedNotification.default;
+        }],
+        execute: function () {}
+    };
+});;
+'use strict';
+
+System.register('flagrow/subscribed/subscriptions/userCreated', ['flagrow/subscribed/notifications/UserCreatedNotification'], function (_export, _context) {
     "use strict";
 
     var UserCreatedNotification;
 
     _export('default', function (items, app) {
-        app.notificationComponents.userCreated = UserCreatedNotification;
+        if (app.forum.data.attributes.subscribeUserCreated) {
+            app.notificationComponents.userCreated = UserCreatedNotification;
 
-        items.add('userCreated', {
-            name: 'userCreated',
-            icon: 'user-plus',
-            label: app.translator.trans('flagrow-subscribed.forum.settings.notify_user_created_label')
-        }, -10);
+            items.add('userCreated', {
+                name: 'userCreated',
+                icon: 'user-plus',
+                label: app.translator.trans('flagrow-subscribed.forum.settings.notify_user_created_label')
+            }, -10);
+        }
 
         return items;
     });

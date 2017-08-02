@@ -1,6 +1,6 @@
 import {extend} from 'flarum/extend';
-import addSubscriptionPane from 'flagrow/subscribed/addSubscriptionPane';
+import addPermissions from "flagrow/subscribed/addPermissions";
 
 app.initializers.add('flagrow-subscribed', function(app) {
-    addSubscriptionPane();
+    addPermissions();
 });

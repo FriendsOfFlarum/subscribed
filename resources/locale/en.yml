@@ -11,3 +11,6 @@ flagrow-subscribed:
     admin:
         menu:
             description: Configure (default) user subscriptions
+        permission:
+            subscribe_to_discussion_created: Allowed to receive notification upon new discussion
+            subscribe_to_user_created: Allowed to receive notification upon new user
