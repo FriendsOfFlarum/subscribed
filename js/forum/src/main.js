@@ -1,14 +1,23 @@
 import {extend} from 'flarum/extend';
 import NotificationGrid from 'flarum/components/NotificationGrid';
-import discussionCreated from 'flagrow/subscribed/subscriptions/discussionCreated';
-import userCreated from 'flagrow/subscribed/subscriptions/userCreated';
 
-app.initializers.add('flagrow-subscribed', function(app) {
-    extend(NotificationGrid.prototype, 'notificationTypes', function(items) {
+import DiscussionCreatedNotification from 'flagrow/subscribed/notifications/DiscussionCreatedNotification';
+import UserCreatedNotification from 'flagrow/subscribed/notifications/UserCreatedNotification';
 
-        items = discussionCreated(items, app);
-        items = userCreated(items, app);
+app.initializers.add('flagrow-subscribed', (app) => {
+    app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
+    app.notificationComponents.userCreated = UserCreatedNotification;
 
-        return items;
+    extend(NotificationGrid.prototype, 'notificationTypes', (items) => {
+        items.add('discussionCreated', {
+            name: 'discussionCreated',
+            icon: 'pencil',
+            label: app.translator.trans('flagrow-subscribed.forum.settings.notify_discussion_created_label')
+        }, 5);
+        items.add('userCreated', {
+            name: 'userCreated',
+            icon: 'user-plus',
+            label: app.translator.trans('flagrow-subscribed.forum.settings.notify_user_created_label')
+        }, -10);
     });
 });

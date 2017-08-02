@@ -15,4 +15,7 @@ export default class DiscussionCreatedNotification extends Notification {
     content() {
         return app.translator.trans('flagrow-subscribed.forum.notifications.discussion_created_text', {user: this.props.notification.sender()});
     }
+
+    excerpt() {
+    }
 }
