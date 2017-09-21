@@ -27,6 +27,9 @@
                 "backgroundColor": "#f4f4f4",
                 "color": "#5f4bb6"
             }
+        },
+        "flagrow": {
+            "discuss": "https://discuss.flarum.org/d/6460-flagrow-subscribed-additional-event-subscriptions"
         }
     },
     "autoload": {
