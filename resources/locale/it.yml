@@ -1,0 +1,16 @@
+flagrow-subscribed:
+    forum:
+        settings:
+            defaults_label: Imposta "{setting}" abilitato come predefinito
+            forced_label: Forza abilitazione di "{setting}" per tutti
+            notify_discussion_created_label: Qualcuno crea una discussione
+            notify_user_created_label: Qualcuno si iscrive al forum
+        notifications:
+            discussion_created_text: "{username} ha creato una nuova discussione"
+            user_created_text: "{username} si è iscritto"
+    admin:
+        menu:
+            description: Configura le iscrizioni (predefinite) degli utenti
+        permission:
+            subscribe_to_discussion_created: Può ricevere le notifiche per le nuove discussioni
+            subscribe_to_user_created: Può ricevere le notifiche per i nuovi iscritti
