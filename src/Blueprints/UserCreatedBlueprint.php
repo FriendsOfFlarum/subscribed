@@ -2,11 +2,11 @@
 
 namespace Flagrow\Subscribed\Blueprints;
 
-use Flarum\Core\Notification\BlueprintInterface;
-use Flarum\Core\Notification\MailableInterface;
-use Flarum\Core\User;
+use Flarum\Notification\Blueprint\BlueprintInterface;
+use Flarum\Notification\MailableInterface;
+use Flarum\User\User;
 
-class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
+abstract class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
     /**
      * @var User

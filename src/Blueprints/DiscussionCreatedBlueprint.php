@@ -2,11 +2,11 @@
 
 namespace Flagrow\Subscribed\Blueprints;
 
-use Flarum\Core\Discussion;
-use Flarum\Core\Notification\BlueprintInterface;
-use Flarum\Core\Notification\MailableInterface;
+use Flarum\Discussion\Discussion;
+use Flarum\Notification\Blueprint\BlueprintInterface;
+use Flarum\Notification\MailableInterface;
 
-class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
+abstract class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
     /**
      * @var Discussion

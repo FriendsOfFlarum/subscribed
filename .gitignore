@@ -1,3 +1,9 @@
-js/*/node_modules
-vendor/
-composer.lock
+/vendor
+composer.phar
+.DS_Store
+Thumbs.db
+node_modules
+bower_components
+.idea
+.floo*
+package-lock.json

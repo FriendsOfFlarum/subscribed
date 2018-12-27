@@ -3,7 +3,7 @@ import Notification from 'flarum/components/Notification';
 export default class DiscussionCreatedNotification extends Notification {
     icon() {
         // Same as create discussion button on purpose.
-        return 'edit';
+        return 'fas fa-edit';
     }
 
     href() {
