@@ -6,7 +6,7 @@ use Flarum\Discussion\Discussion;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 
-abstract class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
+class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
     /**
      * @var Discussion
@@ -78,5 +78,10 @@ abstract class DiscussionCreatedBlueprint implements BlueprintInterface, Mailabl
     public function getEmailSubject()
     {
         return $this->discussion->title;
+    }
+
+    public function getFromUser()
+    {
+        // TODO: Implement getFromUser() method.
     }
 }

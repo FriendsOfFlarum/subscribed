@@ -6,7 +6,7 @@ use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\User\User;
 
-abstract class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
+class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
     /**
      * @var User
@@ -79,4 +79,10 @@ abstract class UserCreatedBlueprint implements BlueprintInterface, MailableInter
     {
         return $this->user->username;
     }
+
+    public function getFromUser()
+    {
+        // TODO: Implement getFromUser() method.
+    }
+
 }
