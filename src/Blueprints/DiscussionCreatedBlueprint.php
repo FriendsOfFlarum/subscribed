@@ -26,7 +26,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getSender()
     {
-        return $this->discussion->startUser;
+        return $this->discussion->user;
     }
 
     /**
