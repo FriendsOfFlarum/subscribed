@@ -7,5 +7,5 @@ To view the new activity, check out the following link:
 
 ---
 
-{{ strip_tags($blueprint->discussion->startPost->contentHtml) }}
+{{ strip_tags($blueprint->discussion->firstPost->contentHtml) }}
 
