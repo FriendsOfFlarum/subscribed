@@ -82,6 +82,6 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
 
     public function getFromUser()
     {
-        // TODO: Implement getFromUser() method.
+        return $this->discussion->user;
     }
 }
