@@ -22,6 +22,6 @@ return [
         /**
          *  Views
          */
-        $view->addNamespace('flagrow-subscribed', __DIR__ . '/views');
+        $view->addNamespace('flagrow-subscribed', __DIR__ . '/resources/views');
     }
 ];
