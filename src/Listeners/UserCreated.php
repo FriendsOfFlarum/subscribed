@@ -3,12 +3,12 @@
 namespace Flagrow\Subscribed\Listeners;
 
 use Flagrow\Subscribed\Blueprints\UserCreatedBlueprint;
-use Flarum\Api\Serializer\UserBasicSerializer;
-use Flarum\Core\Notification\NotificationSyncer;
-use Flarum\Core\User;
+use Flarum\Api\Serializer\BasicUserSerializer;
+use Flarum\Notification\NotificationSyncer;
+use Flarum\User\User;
 use Flarum\Event\ConfigureNotificationTypes;
-use Flarum\Event\UserWasDeleted;
-use Flarum\Event\UserWasRegistered;
+use Flarum\User\Event\Deleted;
+use Flarum\User\Event\Registered;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Query\Expression;
 
@@ -34,8 +34,8 @@ class UserCreated
     public function subscribe(Dispatcher $events)
     {
         $events->listen(ConfigureNotificationTypes::class, [$this, 'addType']);
-        $events->listen(UserWasRegistered::class, [$this, 'whenUserRegistered']);
-        $events->listen(UserWasDeleted::class, [$this, 'whenUserWasDeleted']);
+        $events->listen(Registered::class, [$this, 'whenUserRegistered']);
+        $events->listen(Deleted::class, [$this, 'whenUserWasDeleted']);
     }
 
     /**
@@ -45,15 +45,15 @@ class UserCreated
     {
         $event->add(
             UserCreatedBlueprint::class,
-            UserBasicSerializer::class,
+            BasicUserSerializer::class,
             []
         );
     }
 
     /**
-     * @param UserWasRegistered $event
+     * @param Registered $event
      */
-    public function whenUserRegistered(UserWasRegistered $event)
+    public function whenUserRegistered(Registered $event)
     {
         $user = $event->user;
 
@@ -74,9 +74,9 @@ class UserCreated
     }
 
     /**
-     * @param UserWasDeleted $event
+     * @param Deleted $event
      */
-    public function whenUserWasDeleted(UserWasDeleted $event)
+    public function whenUserWasDeleted(Deleted $event)
     {
         $this->notifications->delete($this->getNotification($event->user));
     }

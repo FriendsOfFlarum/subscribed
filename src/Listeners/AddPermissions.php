@@ -3,7 +3,7 @@
 namespace Flagrow\Subscribed\Listeners;
 
 use Flarum\Api\Serializer\ForumSerializer;
-use Flarum\Event\PrepareApiAttributes;
+use Flarum\Api\Event\Serializing;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class AddPermissions
@@ -14,13 +14,13 @@ class AddPermissions
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(PrepareApiAttributes::class, [$this, 'prepareApiAttributes']);
+        $events->listen(Serializing::class, [$this, 'prepareApiAttributes']);
     }
 
     /**
-     * @param PrepareApiAttributes $event
+     * @param Serializing $event
      */
-    public function prepareApiAttributes(PrepareApiAttributes $event)
+    public function prepareApiAttributes(Serializing $event)
     {
         if ($event->isSerializer(ForumSerializer::class)) {
             $event->attributes['subscribeDiscussionCreated'] = $event->actor->can('subscribeDiscussionCreated');

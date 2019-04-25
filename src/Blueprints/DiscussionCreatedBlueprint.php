@@ -2,9 +2,9 @@
 
 namespace Flagrow\Subscribed\Blueprints;
 
-use Flarum\Core\Discussion;
-use Flarum\Core\Notification\BlueprintInterface;
-use Flarum\Core\Notification\MailableInterface;
+use Flarum\Discussion\Discussion;
+use Flarum\Notification\Blueprint\BlueprintInterface;
+use Flarum\Notification\MailableInterface;
 
 class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
@@ -26,7 +26,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getSender()
     {
-        return $this->discussion->startUser;
+        return $this->discussion->user;
     }
 
     /**
@@ -63,7 +63,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     /**
      * Get the name of the view to construct a notification email with.
      *
-     * @return string
+     * @return array
      */
     public function getEmailView()
     {
@@ -78,5 +78,10 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     public function getEmailSubject()
     {
         return $this->discussion->title;
+    }
+
+    public function getFromUser()
+    {
+        return $this->discussion->user;
     }
 }

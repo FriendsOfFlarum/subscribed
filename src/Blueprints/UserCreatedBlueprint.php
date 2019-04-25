@@ -2,9 +2,9 @@
 
 namespace Flagrow\Subscribed\Blueprints;
 
-use Flarum\Core\Notification\BlueprintInterface;
-use Flarum\Core\Notification\MailableInterface;
-use Flarum\Core\User;
+use Flarum\Notification\Blueprint\BlueprintInterface;
+use Flarum\Notification\MailableInterface;
+use Flarum\User\User;
 
 class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
@@ -63,7 +63,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * Get the name of the view to construct a notification email with.
      *
-     * @return string
+     * @return array
      */
     public function getEmailView()
     {
@@ -79,4 +79,10 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     {
         return $this->user->username;
     }
+
+    public function getFromUser()
+    {
+        // TODO: Implement getFromUser() method.
+    }
+
 }

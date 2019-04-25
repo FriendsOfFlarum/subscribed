@@ -3,14 +3,14 @@
 namespace Flagrow\Subscribed\Listeners;
 
 use Flagrow\Subscribed\Blueprints\DiscussionCreatedBlueprint;
-use Flarum\Api\Serializer\DiscussionBasicSerializer;
-use Flarum\Core\Discussion;
-use Flarum\Core\Notification\NotificationSyncer;
-use Flarum\Core\User;
+use Flarum\Api\Serializer\BasicDiscussionSerializer;
+use Flarum\Discussion\Discussion;
+use Flarum\Notification\NotificationSyncer;
+use Flarum\User\User;
 use Flarum\Event\ConfigureNotificationTypes;
-use Flarum\Event\DiscussionWasDeleted;
-use Flarum\Event\DiscussionWasRestored;
-use Flarum\Event\DiscussionWasStarted;
+use Flarum\Discussion\Event\Deleted;
+use Flarum\Discussion\Event\Restored;
+use Flarum\Discussion\Event\Started;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Query\Expression;
 
@@ -36,9 +36,9 @@ class DiscussionCreated
     public function subscribe(Dispatcher $events)
     {
         $events->listen(ConfigureNotificationTypes::class, [$this, 'addType']);
-        $events->listen(DiscussionWasStarted::class, [$this, 'whenDiscussionWasStarted']);
-        $events->listen(DiscussionWasDeleted::class, [$this, 'whenDiscussionWasDeleted']);
-        $events->listen(DiscussionWasRestored::class, [$this, 'whenDiscussionWasRestored']);
+        $events->listen(Started::class, [$this, 'whenDiscussionWasStarted']);
+        $events->listen(Deleted::class, [$this, 'whenDiscussionWasDeleted']);
+        $events->listen(Restored::class, [$this, 'whenDiscussionWasRestored']);
     }
 
     /**
@@ -48,15 +48,15 @@ class DiscussionCreated
     {
         $event->add(
             DiscussionCreatedBlueprint::class,
-            DiscussionBasicSerializer::class,
+            BasicDiscussionSerializer::class,
             []
         );
     }
 
     /**
-     * @param DiscussionWasStarted $event
+     * @param Started $event
      */
-    public function whenDiscussionWasStarted(DiscussionWasStarted $event)
+    public function whenDiscussionWasStarted(Started $event)
     {
         $discussion = $event->discussion;
 
@@ -77,17 +77,17 @@ class DiscussionCreated
     }
 
     /**
-     * @param DiscussionWasDeleted $event
+     * @param Deleted $event
      */
-    public function whenDiscussionWasDeleted(DiscussionWasDeleted $event)
+    public function whenDiscussionWasDeleted(Deleted $event)
     {
         $this->notifications->delete($this->getNotification($event->discussion));
     }
 
     /**
-     * @param DiscussionWasRestored $event
+     * @param Restored $event
      */
-    public function whenDiscussionWasRestored(DiscussionWasRestored $event)
+    public function whenDiscussionWasRestored(Restored $event)
     {
         $this->notifications->restore($this->getNotification($event->discussion));
     }

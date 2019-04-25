@@ -3,7 +3,7 @@ import Notification from 'flarum/components/Notification';
 export default class DiscussionCreatedNotification extends Notification {
     icon() {
         // Same as create discussion button on purpose.
-        return 'edit';
+        return 'fas fa-edit';
     }
 
     href() {
@@ -13,9 +13,6 @@ export default class DiscussionCreatedNotification extends Notification {
     }
 
     content() {
-        return app.translator.trans('flagrow-subscribed.forum.notifications.discussion_created_text', {user: this.props.notification.sender()});
-    }
-
-    excerpt() {
+        return app.translator.trans('flagrow-subscribed.forum.notifications.discussion_created_text', {user: this.props.notification.fromUser()});
     }
 }

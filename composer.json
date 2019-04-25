@@ -23,7 +23,7 @@
         "flarum-extension": {
             "title": "Flagrow Subscribed",
             "icon": {
-                "name": "reply-all",
+                "name": "fas fa-reply-all",
                 "backgroundColor": "#f4f4f4",
                 "color": "#5f4bb6"
             }
