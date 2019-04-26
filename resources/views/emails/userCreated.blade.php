@@ -1,8 +1,6 @@
 Hey {{ $user->username }}!
 
-{{ $blueprint->user->username }} joined {{ app()->url() }}.
+{{ $blueprint->user->username }} just joined {{ app()->url() }}.
 
-To view the new user, check out the following link:
+To view this new user's profile, please click on following link:
 {{ app()->url() }}/u/{{ $blueprint->user->id }}
-
-

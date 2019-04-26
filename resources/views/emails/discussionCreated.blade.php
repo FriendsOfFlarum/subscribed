@@ -1,11 +1,11 @@
 Hey {{ $user->username }}!
 
-{{ $blueprint->discussion->user->username }} created a discussion: {{ $blueprint->discussion->title }}
+{{ $blueprint->discussion->user->username }} created a new discussion: {{ $blueprint->discussion->title }}
 
-To view the new activity, check out the following link:
+To view this new activity, please click the following link:
 {{ app()->url() }}/d/{{ $blueprint->discussion->id }}
 
+Additionally, you can find the contents of the first post in this new discussion below
 ---
 
 {{ strip_tags($blueprint->discussion->firstPost->contentHtml) }}
-

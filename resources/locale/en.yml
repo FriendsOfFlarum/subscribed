@@ -7,7 +7,7 @@ flagrow-subscribed:
             notify_user_created_label: When someone registers
         notifications:
             discussion_created_text: "{username} created a new discussion"
-            user_created_text: "New user {username}"
+            user_created_text: "{username} had just signed up"
     admin:
         menu:
             description: Configure (default) user subscriptions
