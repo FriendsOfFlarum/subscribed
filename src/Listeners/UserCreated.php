@@ -1,8 +1,8 @@
 <?php
 
-namespace Flagrow\Subscribed\Listeners;
+namespace FoF\Subscribed\Listeners;
 
-use Flagrow\Subscribed\Blueprints\UserCreatedBlueprint;
+use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
 use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Notification\NotificationSyncer;
 use Flarum\User\User;

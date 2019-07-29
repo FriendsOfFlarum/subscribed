@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagrow\Subscribed\Listeners;
+namespace FoF\Subscribed\Listeners;
 
 use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Api\Event\Serializing;

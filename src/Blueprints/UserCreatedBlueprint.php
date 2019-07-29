@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagrow\Subscribed\Blueprints;
+namespace FoF\Subscribed\Blueprints;
 
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
@@ -67,7 +67,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
      */
     public function getEmailView()
     {
-        return ['text' => 'flagrow-subscribed::emails.userCreated'];
+        return ['text' => 'fof-subscribed::emails.userCreated'];
     }
 
     /**

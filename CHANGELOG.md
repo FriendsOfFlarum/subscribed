@@ -2,3 +2,7 @@
   - Added event for new discussion. Including email and web.
   - Added event for new user. Including email and web.
   - Both events are permission based.
+- 0.1.0
+  - Move to FoF namespace.
+  - Finished implementing new user and new discussion notifications.
+  - Fixed notification settings displaying even if user did not have permission to receive the notification type.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Flagrow\Subscribed\Listeners;
+namespace FoF\Subscribed\Listeners;
 
-use Flagrow\Subscribed\Blueprints\DiscussionCreatedBlueprint;
+use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Discussion\Discussion;
 use Flarum\Notification\NotificationSyncer;

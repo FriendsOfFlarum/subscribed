@@ -8,6 +8,4 @@ export default function () {
         discussionCreated(items);
         userCreated(items);
     });
-    extend(PermissionGrid.prototype, 'moderateItems', items => {
-    });
 }

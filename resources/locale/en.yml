@@ -1,4 +1,4 @@
-flagrow-subscribed:
+fof-subscribed:
     forum:
         settings:
             defaults_label: Set "{setting}" enabled by default

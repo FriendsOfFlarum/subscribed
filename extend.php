@@ -1,6 +1,6 @@
 <?php
 
-namespace Flagrow\Subscribed;
+namespace FoF\Subscribed;
 
 use Flarum\Extend;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -22,6 +22,6 @@ return [
         /**
          *  Views
          */
-        $view->addNamespace('flagrow-subscribed', __DIR__ . '/resources/views');
+        $view->addNamespace('fof-subscribed', __DIR__ . '/resources/views');
     }
 ];
