@@ -2,7 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/fof/subscribed.svg)](https://packagist.org/packages/fof/subscribed)
 
-A [Flarum](http://flarum.org) extension. Allow users to log in with Discord.
+A [Flarum](http://flarum.org) extension. Adds additional subscriptions to specific events.
 
 ### Installation
 
