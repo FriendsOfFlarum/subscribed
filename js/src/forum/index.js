@@ -4,13 +4,11 @@ import NotificationGrid from 'flarum/components/NotificationGrid';
 import DiscussionCreatedNotification from './notifications/DiscussionCreatedNotification';
 import UserCreatedNotification from './notifications/UserCreatedNotification';
 
-app.initializers.add('fof-subscribed', (app) => {
+app.initializers.add('fof-subscribed', () => {
     app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
     app.notificationComponents.userCreated = UserCreatedNotification;
 
     extend(NotificationGrid.prototype, 'notificationTypes', (items) => {
-        if (!app.session.user) return;
-
         if (app.forum.attribute('subscribeDiscussionCreated')) {
             items.add('discussionCreated', {
                 name: 'discussionCreated',
