@@ -2,19 +2,18 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
 use Flarum\Api\Serializer\BasicUserSerializer;
-use Flarum\Notification\NotificationSyncer;
-use Flarum\User\User;
 use Flarum\Event\ConfigureNotificationTypes;
+use Flarum\Notification\NotificationSyncer;
 use Flarum\User\Event\Deleted;
 use Flarum\User\Event\Registered;
+use Flarum\User\User;
+use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Query\Expression;
 
 class UserCreated
 {
-
     /**
      * @var NotificationSyncer
      */
@@ -83,6 +82,7 @@ class UserCreated
 
     /**
      * @param User $user
+     *
      * @return UserCreatedBlueprint
      */
     protected function getNotification(User $user)
