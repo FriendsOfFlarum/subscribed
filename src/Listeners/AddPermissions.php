@@ -2,13 +2,12 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Api\Event\Serializing;
+use Flarum\Api\Serializer\ForumSerializer;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class AddPermissions
 {
-
     /**
      * @param Dispatcher $events
      */

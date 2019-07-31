@@ -84,5 +84,4 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     {
         return $this->user;
     }
-
 }

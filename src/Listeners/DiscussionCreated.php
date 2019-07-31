@@ -2,21 +2,20 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Discussion\Discussion;
-use Flarum\Notification\NotificationSyncer;
-use Flarum\User\User;
-use Flarum\Event\ConfigureNotificationTypes;
 use Flarum\Discussion\Event\Deleted;
 use Flarum\Discussion\Event\Restored;
 use Flarum\Discussion\Event\Started;
+use Flarum\Event\ConfigureNotificationTypes;
+use Flarum\Notification\NotificationSyncer;
+use Flarum\User\User;
+use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Query\Expression;
 
 class DiscussionCreated
 {
-
     /**
      * @var NotificationSyncer
      */
@@ -92,9 +91,9 @@ class DiscussionCreated
         $this->notifications->restore($this->getNotification($event->discussion));
     }
 
-
     /**
      * @param Discussion $discussion
+     *
      * @return DiscussionCreatedBlueprint
      */
     protected function getNotification(Discussion $discussion)
