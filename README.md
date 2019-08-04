@@ -17,6 +17,9 @@ __**IMPORTANT NOTICE:**__ This is the continued development of the original exte
 **New User:**
 ![New User Event](https://i.imgur.com/jSdhrWJ.png)
 
+### Available Permissions:
+![Available Permissions](https://i.imgur.com/07pqxxx.png)
+
 ### Installation
 
 Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
