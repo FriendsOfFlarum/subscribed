@@ -77,7 +77,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
      */
     public function getEmailSubject()
     {
-        return '[New User] '.$this->user->username;
+        return '[New User] '.$this->user->display_name;
     }
 
     public function getFromUser()
