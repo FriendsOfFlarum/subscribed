@@ -8,4 +8,4 @@ To view this new activity, please click the following link:
 Additionally, you can find the contents of the first post in this new discussion below
 ---
 
-{{ strip_tags($blueprint->discussion->firstPost->contentHtml) }}
+{{ $blueprint->discussion->firstPost->content }}
