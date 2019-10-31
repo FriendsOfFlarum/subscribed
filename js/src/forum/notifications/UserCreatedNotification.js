@@ -12,6 +12,6 @@ export default class UserCreatedNotification extends Notification {
     }
 
     content() {
-        return app.translator.trans('fof-subscribed.forum.notifications.user_created_text', {user: this.props.notification.fromUser()});
+        return app.translator.trans('fof-subscribed.forum.notifications.user_created_text', { user: this.props.notification.fromUser() });
     }
 }

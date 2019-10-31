@@ -9,20 +9,13 @@ use Illuminate\Contracts\Events\Dispatcher;
 class AddPermissions
 {
     /**
-     * @param Dispatcher $events
-     */
-    public function subscribe(Dispatcher $events)
-    {
-        $events->listen(Serializing::class, [$this, 'prepareApiAttributes']);
-    }
-
-    /**
      * @param Serializing $event
      */
-    public function prepareApiAttributes(Serializing $event)
+    public function handle(Serializing $event)
     {
         if ($event->isSerializer(ForumSerializer::class)) {
             $event->attributes['subscribeDiscussionCreated'] = $event->actor->can('subscribeDiscussionCreated');
+            $event->attributes['subscribePostUnapproved'] = $event->actor->can('subscribePostUnapproved');
             $event->attributes['subscribeUserCreated'] = $event->actor->can('subscribeUserCreated');
         }
     }

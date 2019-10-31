@@ -3,16 +3,16 @@
 namespace FoF\Subscribed\Listeners;
 
 use Flarum\Api\Serializer\BasicDiscussionSerializer;
+use Flarum\Approval\Event\PostWasApproved;
 use Flarum\Discussion\Discussion;
 use Flarum\Discussion\Event\Deleted;
 use Flarum\Discussion\Event\Restored;
 use Flarum\Discussion\Event\Started;
 use Flarum\Event\ConfigureNotificationTypes;
 use Flarum\Notification\NotificationSyncer;
-use Flarum\User\User;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
+use FoF\Subscribed\Jobs\SendNotificationWhenDiscussionIsStarted;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Database\Query\Expression;
 
 class DiscussionCreated
 {
@@ -36,6 +36,7 @@ class DiscussionCreated
     {
         $events->listen(ConfigureNotificationTypes::class, [$this, 'addType']);
         $events->listen(Started::class, [$this, 'whenDiscussionWasStarted']);
+        $events->listen(PostWasApproved::class, [$this, 'whenDiscussionWasApproved']);
         $events->listen(Deleted::class, [$this, 'whenDiscussionWasDeleted']);
         $events->listen(Restored::class, [$this, 'whenDiscussionWasRestored']);
     }
@@ -52,26 +53,27 @@ class DiscussionCreated
         );
     }
 
-    /**
-     * @param Started $event
-     */
     public function whenDiscussionWasStarted(Started $event)
     {
-        $discussion = $event->discussion;
+        app('log')->debug('[STARTED] '. $event->discussion->toJson());
 
-        $notify = User::query()
-            ->where('users.id', '!=', $discussion->start_user_id)
-            ->where('preferences', 'regexp', new Expression('\'"notify_discussionCreated_[a-z]+":true\''))
-            ->get();
+        if ($event->discussion->is_approved === false) {
+            return;
+        }
 
-        $notify = $notify->filter(function (User $recipient) use ($discussion) {
-            return $recipient->can('subscribeDiscussionCreated') &&
-                $recipient->can('viewDiscussions', $discussion);
-        });
+        app('flarum.queue.connection')->push(
+            new SendNotificationWhenDiscussionIsStarted($event->discussion)
+        );
+    }
 
-        $this->notifications->sync(
-            $this->getNotification($event->discussion),
-            $notify->all()
+    public function whenDiscussionWasApproved(PostWasApproved $event)
+    {
+        if ($event->post->number != 1) {
+            return;
+        }
+
+        app('flarum.queue.connection')->push(
+            new SendNotificationWhenDiscussionIsStarted($event->post->discussion)
         );
     }
 
