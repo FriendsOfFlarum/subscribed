@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of fof/subscribed.
+ *
+ * Copyright (c) 2019 FriendsOfFlarum.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace FoF\Subscribed\Listeners;
 
 use Flarum\Api\Serializer\BasicDiscussionSerializer;
@@ -55,7 +64,7 @@ class DiscussionCreated
 
     public function whenDiscussionWasStarted(Started $event)
     {
-        app('log')->debug('[STARTED] '. $event->discussion->toJson());
+        app('log')->debug('[STARTED] '.$event->discussion->toJson());
 
         if ($event->discussion->is_approved === false) {
             return;
