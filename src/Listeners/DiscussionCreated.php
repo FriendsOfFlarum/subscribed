@@ -64,8 +64,6 @@ class DiscussionCreated
 
     public function whenDiscussionWasStarted(Started $event)
     {
-        app('log')->debug('[STARTED] '.$event->discussion->toJson());
-
         if ($event->discussion->is_approved === false) {
             return;
         }
