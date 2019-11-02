@@ -28,10 +28,10 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public $post;
 
-    public function __construct(Discussion $discussion, Post $post)
+    public function __construct(Discussion $discussion, Post $post = null)
     {
         $this->discussion = $discussion;
-        $this->post = $post;
+        $this->post = $post ?? $discussion->firstPost;
     }
 
     /**
