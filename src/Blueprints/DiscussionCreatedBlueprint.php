@@ -14,6 +14,7 @@ namespace FoF\Subscribed\Blueprints;
 use Flarum\Discussion\Discussion;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
+use Flarum\Post\Post;
 
 class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
@@ -23,11 +24,14 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     public $discussion;
 
     /**
-     * @param Discussion $discussion
+     * @var Post
      */
-    public function __construct(Discussion $discussion)
+    public $post;
+
+    public function __construct(Discussion $discussion, Post $post)
     {
         $this->discussion = $discussion;
+        $this->post = $post;
     }
 
     /**

@@ -39,7 +39,7 @@ class SendNotificationWhenDiscussionIsStarted implements ShouldQueue
         $discussion = $this->discussion;
 
         $notify = User::query()
-            ->where('users.id', '!=', $discussion->start_user_id)
+            ->where('users.id', '!=', $discussion->user_id)
             ->where('preferences', 'regexp', new Expression('\'"notify_discussionCreated_[a-z]+":true\''))
             ->get();
 
@@ -47,8 +47,10 @@ class SendNotificationWhenDiscussionIsStarted implements ShouldQueue
             return $recipient->can('subscribeDiscussionCreated') && $discussion->newQuery()->whereVisibleTo($recipient)->find($discussion->id) && !$discussion->stateFor($recipient)->last_read_post_number;
         });
 
+        $post = $discussion->posts()->where('number', 1)->first();
+
         $notifications->sync(
-            new DiscussionCreatedBlueprint($discussion),
+            new DiscussionCreatedBlueprint($discussion, $post),
             $notify->all()
         );
     }

@@ -9,4 +9,4 @@ Additionally, you can find the contents of the first post in this new discussion
 
 ---
 
-{{ $blueprint->discussion->firstPost->content }}
+{{ $blueprint->post->content }}
