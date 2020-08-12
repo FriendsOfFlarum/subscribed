@@ -2,9 +2,7 @@
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/fof/subscribed.svg)](https://packagist.org/packages/fof/subscribed)
 
-A [Flarum](http://flarum.org) extension. Adds additional subscriptions to specific events.
-
-__**IMPORTANT NOTICE:**__ This is the continued development of the original extension created by [Flagrow](https://discuss.flarum.org/d/6460-flagrow-subscribed-additional-event-subscriptions) but moved to the FoF space for continued support and development. This has also been updated for Beta 9 with the notifications actually working properly now :)
+A [Flarum](http://flarum.org) extension which adds additional subscriptions to specific events.
 
 ### Available Notifications:
 ![](https://i.imgur.com/I4sT10d.png)
