@@ -90,7 +90,9 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getEmailSubject()
     {
-        return $this->discussion->title;
+        return app('translator')->trans('fof-subscribed.email.subject.newDiscussion', [
+            '{title}' => $this->discussion->title,
+        ]);
     }
 
     public function getFromUser()
