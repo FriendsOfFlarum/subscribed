@@ -86,7 +86,9 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
      */
     public function getEmailSubject()
     {
-        return '[New User] '.$this->user->display_name;
+        return app('translator')->trans('fof-subscribed.email.subject.newUser', [
+            '{username}' => $this->user->display_name,
+        ]);
     }
 
     public function getFromUser()

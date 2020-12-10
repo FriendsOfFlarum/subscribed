@@ -1,6 +1,6 @@
-Hey {{ $user->display_name }}!
-
-{{ $blueprint->user->display_name }} just joined {{ app()->url() }}.
-
-To view this new user's profile, please click on following link:
-{{ app()->url() }}/u/{{ $blueprint->user->id }}
+{!! $translator->trans('fof-subscribed.email.body.newUser', [
+    '{recipient_display_name}' => $user->display_name,
+    '{actor_display_name}' => $blueprint->user->display_name,
+    '{forum_url}' => $url->to('forum'),
+    '{user_url}' => $this->url->to('forum')->route('user', ['username' => $blueprint->user->username]),
+]) !!}

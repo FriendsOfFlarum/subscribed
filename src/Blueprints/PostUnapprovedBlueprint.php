@@ -86,7 +86,10 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
      */
     public function getEmailSubject()
     {
-        return "[New Unapproved Post] {$this->post->user->display_name} posted in {$this->post->discussion->title}";
+        return app('translator')->trans('fof-subscribed.email.subject.postUnapproved', [
+            '{username}' => $this->post->user->display_name,
+            '{title}' => $this->post->discussion->title,
+        ]);
     }
 
     public function getFromUser()
