@@ -22,7 +22,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendNotificationWhenPostIsUnapproved implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var Post

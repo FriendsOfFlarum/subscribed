@@ -88,7 +88,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
     {
         return app('translator')->trans('fof-subscribed.email.subject.postUnapproved', [
             '{username}' => $this->post->user->display_name,
-            '{title}' => $this->post->discussion->title,
+            '{title}'    => $this->post->discussion->title,
         ]);
     }
 

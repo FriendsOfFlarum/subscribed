@@ -21,7 +21,8 @@ use Illuminate\Queue\SerializesModels;
 
 class SendNotificationWhenUserIsCreated implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     /**
      * @var User
