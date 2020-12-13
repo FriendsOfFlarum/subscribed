@@ -11,20 +11,19 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use Flarum\Api\Event\Serializing;
 use Flarum\Api\Serializer\ForumSerializer;
 
 class AddPermissions
 {
     /**
-     * @param Serializing $event
+     * @param ForumSerializer $serializer
      */
-    public function handle(Serializing $event)
+    public function __invoke(ForumSerializer $serializer)
     {
-        if ($event->isSerializer(ForumSerializer::class)) {
-            $event->attributes['subscribeDiscussionCreated'] = $event->actor->can('subscribeDiscussionCreated');
-            $event->attributes['subscribePostUnapproved'] = $event->actor->can('subscribePostUnapproved');
-            $event->attributes['subscribeUserCreated'] = $event->actor->can('subscribeUserCreated');
-        }
+        $attributes['subscribeDiscussionCreated'] = $serializer->getActor()->can('subscribeDiscussionCreated');
+        $attributes['subscribePostUnapproved'] = $serializer->getActor()->can('subscribePostUnapproved');
+        $attributes['subscribeUserCreated'] = $serializer->getActor()->can('subscribeUserCreated');
+
+        return $attributes;
     }
 }

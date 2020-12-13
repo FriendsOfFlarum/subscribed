@@ -11,8 +11,15 @@
 
 namespace FoF\Subscribed;
 
-use Flarum\Api\Event\Serializing;
+use Flarum\Api\Serializer\BasicDiscussionSerializer;
+use Flarum\Api\Serializer\BasicPostSerializer;
+use Flarum\Api\Serializer\BasicUserSerializer;
+use Flarum\Api\Serializer\ForumSerializer;
 use Flarum\Extend;
+use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
+use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
+use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
+use FoF\Subscribed\Listeners\AddPermissions;
 use Illuminate\Contracts\Events\Dispatcher;
 
 return [
@@ -27,8 +34,13 @@ return [
     (new Extend\View())
         ->namespace('fof-subscribed', __DIR__.'/resources/views'),
 
-    (new Extend\Event())
-        ->listen(Serializing::class, Listeners\AddPermissions::class),
+    (new Extend\Notification())
+        ->type(DiscussionCreatedBlueprint::class, BasicDiscussionSerializer::class, [])
+        ->type(PostUnapprovedBlueprint::class, BasicPostSerializer::class, [])
+        ->type(UserCreatedBlueprint::class, BasicUserSerializer::class, []),
+
+    (new Extend\ApiSerializer(ForumSerializer::class))
+        ->mutate(AddPermissions::class),
 
     function (Dispatcher $events) {
         /*

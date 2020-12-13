@@ -11,9 +11,7 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use Flarum\Api\Serializer\BasicPostSerializer;
 use Flarum\Approval\Event\PostWasApproved;
-use Flarum\Event\ConfigureNotificationTypes;
 use Flarum\Notification\NotificationSyncer;
 use Flarum\Post\Event\Deleted;
 use Flarum\Post\Event\Posted;
@@ -45,22 +43,9 @@ class UnapprovedPostCreated
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(ConfigureNotificationTypes::class, [$this, 'addType']);
         $events->listen(Posted::class, [$this, 'whenPostWasPosted']);
         $events->listen(Deleted::class, [$this, 'whenPostWasDeleted']);
         $events->listen(PostWasApproved::class, [$this, 'whenPostWasApproved']);
-    }
-
-    /**
-     * @param ConfigureNotificationTypes $event
-     */
-    public function addType(ConfigureNotificationTypes $event)
-    {
-        $event->add(
-            PostUnapprovedBlueprint::class,
-            BasicPostSerializer::class,
-            []
-        );
     }
 
     public function whenPostWasPosted(Posted $event)
