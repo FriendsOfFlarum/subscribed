@@ -11,8 +11,6 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use Flarum\Api\Serializer\BasicUserSerializer;
-use Flarum\Event\ConfigureNotificationTypes;
 use Flarum\Notification\NotificationSyncer;
 use Flarum\User\Event\Deleted;
 use Flarum\User\Event\Registered;
@@ -41,21 +39,8 @@ class UserCreated
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(ConfigureNotificationTypes::class, [$this, 'addType']);
         $events->listen(Registered::class, [$this, 'whenUserRegistered']);
         $events->listen(Deleted::class, [$this, 'whenUserWasDeleted']);
-    }
-
-    /**
-     * @param ConfigureNotificationTypes $event
-     */
-    public function addType(ConfigureNotificationTypes $event)
-    {
-        $event->add(
-            UserCreatedBlueprint::class,
-            BasicUserSerializer::class,
-            []
-        );
     }
 
     /**

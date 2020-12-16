@@ -14,6 +14,7 @@ namespace FoF\Subscribed\Blueprints;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\User\User;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
 {
@@ -84,9 +85,9 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return string
      */
-    public function getEmailSubject()
+    public function getEmailSubject(TranslatorInterface $translator)
     {
-        return app('translator')->trans('fof-subscribed.email.subject.newUser', [
+        return $translator->trans('fof-subscribed.email.subject.newUser', [
             '{username}' => $this->user->display_name,
         ]);
     }

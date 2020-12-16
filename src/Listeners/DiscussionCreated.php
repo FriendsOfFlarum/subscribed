@@ -11,13 +11,11 @@
 
 namespace FoF\Subscribed\Listeners;
 
-use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Approval\Event\PostWasApproved;
 use Flarum\Discussion\Discussion;
 use Flarum\Discussion\Event\Deleted;
 use Flarum\Discussion\Event\Restored;
 use Flarum\Discussion\Event\Started;
-use Flarum\Event\ConfigureNotificationTypes;
 use Flarum\Notification\NotificationSyncer;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use FoF\Subscribed\Jobs\SendNotificationWhenDiscussionIsStarted;
@@ -43,23 +41,10 @@ class DiscussionCreated
      */
     public function subscribe(Dispatcher $events)
     {
-        $events->listen(ConfigureNotificationTypes::class, [$this, 'addType']);
         $events->listen(Started::class, [$this, 'whenDiscussionWasStarted']);
         $events->listen(PostWasApproved::class, [$this, 'whenDiscussionWasApproved']);
         $events->listen(Deleted::class, [$this, 'whenDiscussionWasDeleted']);
         $events->listen(Restored::class, [$this, 'whenDiscussionWasRestored']);
-    }
-
-    /**
-     * @param ConfigureNotificationTypes $event
-     */
-    public function addType(ConfigureNotificationTypes $event)
-    {
-        $event->add(
-            DiscussionCreatedBlueprint::class,
-            BasicDiscussionSerializer::class,
-            []
-        );
     }
 
     public function whenDiscussionWasStarted(Started $event)
