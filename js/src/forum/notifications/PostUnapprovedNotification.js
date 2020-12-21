@@ -7,17 +7,17 @@ export default class PostUnapprovedNotification extends Notification {
     }
 
     href() {
-        const notification = this.props.notification;
+        const notification = this.attrs.notification;
         const post = notification.subject();
 
         return app.route.discussion(post.discussion(), post.number());
     }
 
     content() {
-        return app.translator.trans('fof-subscribed.forum.notifications.post_unapproved_text', { user: this.props.notification.fromUser() });
+        return app.translator.trans('fof-subscribed.forum.notifications.post_unapproved_text', { user: this.attrs.notification.fromUser() });
     }
 
     excerpt() {
-        return truncate(this.props.notification.subject().contentPlain(), 200);
+        return truncate(this.attrs.notification.subject().contentPlain(), 200);
     }
 }
