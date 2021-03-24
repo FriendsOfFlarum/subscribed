@@ -1,26 +1,30 @@
 # Subscribed by FriendsOfFlarum
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/fof/subscribed.svg)](https://packagist.org/packages/fof/subscribed)
+![License](https://img.shields.io/badge/license-MIT-blue.svg) [![Latest Stable Version](https://img.shields.io/packagist/v/fof/subscribed.svg)](https://packagist.org/packages/fof/subscribed) [![OpenCollective](https://img.shields.io/badge/opencollective-fof-blue.svg)](https://opencollective.com/fof/donate)
 
-A [Flarum](http://flarum.org) extension which adds additional subscriptions to specific events.
+A [Flarum](http://flarum.org) extension. Adds additional subscriptions to specific events.
 
-### Available Notifications:
-![](https://i.imgur.com/I4sT10d.png)
+### Available Notifications (User Settings)
+- Someone creates a discussion
+- When someone registers
+- A created post needs approval
 
-### Available Events:
+### Available Events
+- **New Discussion**
+  - {username} created a new discussion
+- **New User**
+  - {username} had just signed up
+- **Post Unapproved**
+  - {username} created a post that requires approval
 
-**New Discussion:**
-![New Discussion Event](https://i.imgur.com/EmmmGHI.png)
-
-**New User:**
-![New User Event](https://i.imgur.com/jSdhrWJ.png)
-
-### Available Permissions:
-![Available Permissions](https://i.imgur.com/07pqxxx.png)
+### Available Permissions
+- Allowed to receive notification upon new discussion
+- Allowed to receive notification upon new user
+- Allowed to receive notification upon new unapproved post
 
 ### Installation
 
-Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
+Install manually with composer:
 
 ```sh
 composer require "fof/subscribed:*"
@@ -36,5 +40,7 @@ composer update fof/subscribed
 
 - [Packagist](https://packagist.org/packages/fof/subscribed)
 - [GitHub](https://github.com/FriendsOfFlarum/subscribed)
+
+[![OpenCollective](https://img.shields.io/badge/donate-friendsofflarum-44AEE5?style=for-the-badge&logo=open-collective)](https://opencollective.com/fof/donate)
 
 An extension by [FriendsOfFlarum](https://github.com/FriendsOfFlarum).

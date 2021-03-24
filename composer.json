@@ -30,11 +30,11 @@
         },
         {
             "name": "Christian Lopez",
-            "email": "Lopez.T.Christian@gmail.com"
+            "email": "me@ralkage.com"
         }
     ],
     "require": {
-        "flarum/core": "^0.1.0-beta.15"
+        "flarum/core": "^0.1.0-beta.16"
     },
     "replace": {
         "flagrow/subscribed": "*"
@@ -42,7 +42,7 @@
     "extra": {
         "flarum-extension": {
             "title": "FoF Subscribed",
-            "category": "discussion",
+            "category": "feature",
             "icon": {
                 "name": "fas fa-reply-all",
                 "backgroundColor": "#e74c3c",

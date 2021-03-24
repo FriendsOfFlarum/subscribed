@@ -1,5 +1,5 @@
-import Notification from 'flarum/components/Notification';
-import { truncate } from 'flarum/utils/string';
+import Notification from 'flarum/forum/components/Notification';
+import { truncate } from 'flarum/common/utils/string';
 
 export default class PostUnapprovedNotification extends Notification {
     icon() {

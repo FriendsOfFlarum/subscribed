@@ -3,9 +3,9 @@
 /*
  * This file is part of fof/subscribed.
  *
- * Copyright (c) 2019 FriendsOfFlarum.
+ * Copyright (c) FriendsOfFlarum.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -48,7 +48,7 @@ class UserCreated
      */
     public function whenUserRegistered(Registered $event)
     {
-        app('flarum.queue.connection')->push(
+        resolve('flarum.queue.connection')->push(
             new SendNotificationWhenUserIsCreated($event->user)
         );
     }

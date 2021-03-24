@@ -6,3 +6,5 @@
   - Move to FoF namespace.
   - Finished implementing new user and new discussion notifications.
   - Fixed notification settings displaying even if user did not have permission to receive the notification type.
+- 0.5.0
+  - Update for beta 16.
