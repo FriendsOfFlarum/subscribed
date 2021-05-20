@@ -20,7 +20,6 @@ use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
 use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
 use FoF\Subscribed\Listeners\AddPermissions;
-use Illuminate\Contracts\Events\Dispatcher;
 
 return [
     (new Extend\Frontend('forum'))
