@@ -42,12 +42,8 @@ return [
     (new Extend\ApiSerializer(ForumSerializer::class))
         ->attributes(AddPermissions::class),
 
-    function (Dispatcher $events) {
-        /*
-         * Events
-         */
-        $events->subscribe(Listeners\DiscussionCreated::class);
-        $events->subscribe(Listeners\UnapprovedPostCreated::class);
-        $events->subscribe(Listeners\UserCreated::class);
-    },
+    (new Extend\Event())
+        ->subscribe(Listeners\DiscussionCreated::class)
+        ->subscribe(Listeners\UnapprovedPostCreated::class)
+        ->subscribe(Listeners\UserCreated::class),
 ];

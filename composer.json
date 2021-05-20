@@ -1,6 +1,6 @@
 {
     "name": "fof/subscribed",
-    "description": "Better user subscriptions for your Flarum forum",
+    "description": "Additional user subscriptions for your forum",
     "keywords": [
         "extension",
         "flarum",
@@ -24,17 +24,13 @@
     ],
     "authors": [
         {
-            "name": "Daniël Klabbers",
-            "email": "daniel@klabbers.email",
-            "homepage": "http://luceos.com"
-        },
-        {
-            "name": "Christian Lopez",
-            "email": "me@ralkage.com"
+            "name": "FoF Team",
+            "email": "team@friendsofflarum.org",
+            "role": "developer"
         }
     ],
     "require": {
-        "flarum/core": "^0.1.0-beta.16"
+        "flarum/core": "^1.0.0"
     },
     "replace": {
         "flagrow/subscribed": "*"
