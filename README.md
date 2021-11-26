@@ -27,7 +27,7 @@ A [Flarum](http://flarum.org) extension. Adds additional subscriptions to specif
 Install manually with composer:
 
 ```sh
-composer require "fof/subscribed:*"
+composer require fof/subscribed:"*"
 ```
 
 ### Updating
