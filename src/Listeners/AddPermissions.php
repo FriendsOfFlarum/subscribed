@@ -11,18 +11,20 @@
 
 namespace FoF\Subscribed\Listeners;
 
+use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Api\Serializer\ForumSerializer;
+use Flarum\User\User;
 
 class AddPermissions
 {
     /**
      * @param ForumSerializer $serializer
      */
-    public function __invoke(ForumSerializer $serializer)
+    public function __invoke(CurrentUserSerializer $serializer, User $user, array $attributes): array
     {
-        $attributes['subscribeDiscussionCreated'] = $serializer->getActor()->can('subscribeDiscussionCreated');
-        $attributes['subscribePostUnapproved'] = $serializer->getActor()->can('subscribePostUnapproved');
-        $attributes['subscribeUserCreated'] = $serializer->getActor()->can('subscribeUserCreated');
+        $attributes['canSubscribeDiscussionCreated'] = $serializer->getActor()->can('subscribeDiscussionCreated');
+        $attributes['canSubscribePostUnapproved'] = $serializer->getActor()->can('subscribePostUnapproved');
+        $attributes['canSubscribeUserCreated'] = $serializer->getActor()->can('subscribeUserCreated');
 
         return $attributes;
     }
