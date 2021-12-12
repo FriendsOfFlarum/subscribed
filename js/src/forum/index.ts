@@ -44,7 +44,7 @@ app.initializers.add('fof-subscribed', () => {
         -10
       );
     }
-    
+
     if (currentUser?.canSubscribeUserCreated()) {
       items.add(
         'userCreated',
