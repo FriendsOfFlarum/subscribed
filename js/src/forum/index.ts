@@ -5,14 +5,23 @@ import NotificationGrid from 'flarum/forum/components/NotificationGrid';
 import DiscussionCreatedNotification from './notifications/DiscussionCreatedNotification';
 import UserCreatedNotification from './notifications/UserCreatedNotification';
 import PostUnapprovedNotification from './notifications/PostUnapprovedNotification';
+import User from 'flarum/common/models/User';
+import Model from 'flarum/common/Model';
+import ItemList from 'flarum/common/utils/ItemList';
 
 app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
   app.notificationComponents.userCreated = UserCreatedNotification;
   app.notificationComponents.postUnapproved = PostUnapprovedNotification;
 
-  extend(NotificationGrid.prototype, 'notificationTypes', (items) => {
-    if (app.forum.attribute('subscribeDiscussionCreated')) {
+  User.prototype.canSubscribeDiscussionCreated = Model.attribute('canSubscribeDiscussionCreated');
+  User.prototype.canSubscribePostUnapproved = Model.attribute('canSubscribePostUnapproved');
+  User.prototype.canSubscribeUserCreated = Model.attribute('canSubscribeUserCreated');
+
+  extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList) => {
+    const currentUser = app.session?.user;
+
+    if (currentUser?.canSubscribeDiscussionCreated()) {
       items.add(
         'discussionCreated',
         {
@@ -23,7 +32,8 @@ app.initializers.add('fof-subscribed', () => {
         5
       );
     }
-    if (app.forum.attribute('subscribePostUnapproved')) {
+
+    if (currentUser?.canSubscribePostUnapproved()) {
       items.add(
         'postUnapproved',
         {
@@ -34,7 +44,8 @@ app.initializers.add('fof-subscribed', () => {
         -10
       );
     }
-    if (app.forum.attribute('subscribeUserCreated')) {
+    
+    if (currentUser?.canSubscribeUserCreated()) {
       items.add(
         'userCreated',
         {

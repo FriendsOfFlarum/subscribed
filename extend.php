@@ -14,7 +14,7 @@ namespace FoF\Subscribed;
 use Flarum\Api\Serializer\BasicDiscussionSerializer;
 use Flarum\Api\Serializer\BasicPostSerializer;
 use Flarum\Api\Serializer\BasicUserSerializer;
-use Flarum\Api\Serializer\ForumSerializer;
+use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Extend;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
@@ -38,7 +38,7 @@ return [
         ->type(PostUnapprovedBlueprint::class, BasicPostSerializer::class, [])
         ->type(UserCreatedBlueprint::class, BasicUserSerializer::class, []),
 
-    (new Extend\ApiSerializer(ForumSerializer::class))
+    (new Extend\ApiSerializer(CurrentUserSerializer::class))
         ->attributes(AddPermissions::class),
 
     (new Extend\Event())
