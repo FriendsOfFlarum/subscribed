@@ -14,6 +14,14 @@ app.initializers.add('fof-subscribed', () => {
     .registerPermission(
       {
         icon: 'fas fa-bell',
+        label: app.translator.trans('fof-subscribed.admin.permission.subscribe_to_post_created'),
+        permission: 'subscribePostCreated',
+      },
+      'start'
+    )
+    .registerPermission(
+      {
+        icon: 'fas fa-bell',
         label: app.translator.trans('fof-subscribed.admin.permission.subscribe_to_user_created'),
         permission: 'subscribeUserCreated',
       },

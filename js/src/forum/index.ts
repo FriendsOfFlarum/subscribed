@@ -3,6 +3,7 @@ import { extend } from 'flarum/common/extend';
 import NotificationGrid from 'flarum/forum/components/NotificationGrid';
 
 import DiscussionCreatedNotification from './notifications/DiscussionCreatedNotification';
+import PostCreatedNotification from './notifications/PostCreatedNotification';
 import UserCreatedNotification from './notifications/UserCreatedNotification';
 import PostUnapprovedNotification from './notifications/PostUnapprovedNotification';
 import User from 'flarum/common/models/User';
@@ -11,10 +12,12 @@ import ItemList from 'flarum/common/utils/ItemList';
 
 app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
+  app.notificationComponents.postCreated = PostCreatedNotification;
   app.notificationComponents.userCreated = UserCreatedNotification;
   app.notificationComponents.postUnapproved = PostUnapprovedNotification;
 
   User.prototype.canSubscribeDiscussionCreated = Model.attribute('canSubscribeDiscussionCreated');
+  User.prototype.canSubscribePostCreated = Model.attribute('canSubscribePostCreated');
   User.prototype.canSubscribePostUnapproved = Model.attribute('canSubscribePostUnapproved');
   User.prototype.canSubscribeUserCreated = Model.attribute('canSubscribeUserCreated');
 
@@ -30,6 +33,18 @@ app.initializers.add('fof-subscribed', () => {
           label: app.translator.trans('fof-subscribed.forum.settings.notify_discussion_created_label'),
         },
         5
+      );
+    }
+
+    if (currentUser?.canSubscribePostCreated()) {
+      items.add(
+        'postCreated',
+        {
+          name: 'postCreated',
+          icon: 'fas fa-pencil-alt',
+          label: app.translator.trans('fof-subscribed.forum.settings.notify_post_created_label'),
+        },
+        4
       );
     }
 

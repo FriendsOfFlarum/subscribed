@@ -17,6 +17,7 @@ use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Extend;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
+use FoF\Subscribed\Blueprints\PostCreatedBlueprint;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
 use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
 use FoF\Subscribed\Listeners\AddPermissions;
@@ -35,6 +36,7 @@ return [
 
     (new Extend\Notification())
         ->type(DiscussionCreatedBlueprint::class, BasicDiscussionSerializer::class, [])
+        ->type(PostCreatedBlueprint::class, BasicPostSerializer::class, [])
         ->type(PostUnapprovedBlueprint::class, BasicPostSerializer::class, [])
         ->type(UserCreatedBlueprint::class, BasicUserSerializer::class, []),
 
@@ -43,6 +45,7 @@ return [
 
     (new Extend\Event())
         ->subscribe(Listeners\DiscussionCreated::class)
+        ->subscribe(Listeners\PostCreated::class)
         ->subscribe(Listeners\UnapprovedPostCreated::class)
         ->subscribe(Listeners\UserCreated::class),
 ];
