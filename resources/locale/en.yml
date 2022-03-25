@@ -22,6 +22,7 @@ fof-subscribed:
             newDiscussion: "[Subscribed | New Discussion] {title}"
             newUser: "[Subscribed | New User] {username}"
             postUnapproved: "[Subscribed | Unapproved] {username} posted in {title}"
+            postCreated: "[Subscribed | New Post] {username} wrote a new post in {title}"
         body:
             newDiscussion: |
                 Hey {recipient_display_name},
@@ -45,6 +46,18 @@ fof-subscribed:
                 Hey {recipient_display_name},
 
                 {actor_display_name} created a post that wasn't automatically approved in {discussion_title}
+
+                To view this new post, check out the following link:
+                {post_url}
+
+                ---
+
+                {post_content}
+
+            postCreated: |
+                Hey {recipient_display_name},
+
+                {actor_display_name} just created a new post in {discussion_title}
 
                 To view this new post, check out the following link:
                 {post_url}

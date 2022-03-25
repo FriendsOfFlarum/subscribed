@@ -29,7 +29,7 @@ class PostCreated
     {
         // We don't want to notify if this is the first post in a new disccusion, or if the post
         // is not approved.
-        if ($event->post->number <= 1 || $event->post->is_approved === false) {
+        if ($event->post->number === 1 || $event->post->is_approved === false) {
             return;
         }
 
