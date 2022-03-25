@@ -9,6 +9,7 @@ fof-subscribed:
             notify_user_created_label: When someone registers
         notifications:
             discussion_created_text: "{username} created a new discussion"
+            post_created_text: "{username} wrote a new post"
             post_unapproved_text: "{username} created a post that requires approval"
             user_created_text: "{username} had just signed up"
     admin:

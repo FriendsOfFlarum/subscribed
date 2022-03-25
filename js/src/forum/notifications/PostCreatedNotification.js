@@ -1,5 +1,6 @@
 import app from 'flarum/forum/app';
 import Notification from 'flarum/forum/components/Notification';
+import { truncate } from 'flarum/common/utils/string';
 
 export default class PostCreatedNotification extends Notification {
   icon() {
@@ -8,13 +9,16 @@ export default class PostCreatedNotification extends Notification {
 
   href() {
     const notification = this.attrs.notification;
-    const discussion = notification.subject();
-    const content = notification.content() || {};
+    const post = notification.subject();
 
-    return app.route.discussion(discussion, content.postNumber);
+    return app.route.discussion(post.discussion(), post.postNumber);
   }
 
   content() {
     return app.translator.trans('fof-subscribed.forum.notifications.post_created_text', { user: this.attrs.notification.fromUser() });
+  }
+
+  excerpt() {
+    return truncate(this.attrs.notification.subject().contentPlain(), 200);
   }
 }
