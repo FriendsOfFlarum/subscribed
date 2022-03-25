@@ -23,6 +23,7 @@ class AddPermissions
     public function __invoke(CurrentUserSerializer $serializer, User $user, array $attributes): array
     {
         $attributes['canSubscribeDiscussionCreated'] = $serializer->getActor()->can('subscribeDiscussionCreated');
+        $attributes['canSubscribePostCreated'] = $serializer->getActor()->can('subscribePostCreated');
         $attributes['canSubscribePostUnapproved'] = $serializer->getActor()->can('subscribePostUnapproved');
         $attributes['canSubscribeUserCreated'] = $serializer->getActor()->can('subscribeUserCreated');
 
