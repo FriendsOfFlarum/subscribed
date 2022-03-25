@@ -16,7 +16,6 @@ use Flarum\Api\Serializer\BasicPostSerializer;
 use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Extend;
-use Flarum\Flags\Event\Created as FlagCreated;
 use FoF\Subscribed\Blueprints;
 
 return [
@@ -46,5 +45,5 @@ return [
         ->subscribe(Listeners\PostCreated::class)
         ->subscribe(Listeners\UnapprovedPostCreated::class)
         ->subscribe(Listeners\UserCreated::class)
-        ->listen(FlagCreated::class, Listeners\PostWasFlagged::class),
+        ->subscribe(Listeners\PostWasFlagged::class),
 ];
