@@ -45,7 +45,8 @@
                 "color": "#fff"
             },
             "optional-dependencies": [
-                "flarum/approval"
+                "flarum/approval",
+                "flarum/flags"
               ]
         },
         "flagrow": {

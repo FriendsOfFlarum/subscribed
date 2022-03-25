@@ -1,0 +1,98 @@
+<?php
+
+namespace FoF\Subscribed\Blueprints;
+
+use Flarum\Flags\Flag;
+use Flarum\Notification\Blueprint\BlueprintInterface;
+use Flarum\Notification\MailableInterface;
+use Flarum\Post\Post;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
+class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
+{
+    /**
+     * @var Post
+     */
+    public $post;
+
+    /**
+     * @var Flag
+     */
+    public $flag;
+
+    /**
+     * @param Post $post
+     */
+    public function __construct(Post $post, Flag $flag)
+    {
+        $this->post = $post;
+        $this->flag = $flag;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSender()
+    {
+        return $this->flag->user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSubject()
+    {
+        return $this->post;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getType()
+    {
+        return 'postFlagged';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubjectModel()
+    {
+        return Post::class;
+    }
+
+    /**
+     * Get the name of the view to construct a notification email with.
+     *
+     * @return array
+     */
+    public function getEmailView()
+    {
+        return ['text' => 'fof-subscribed::emails.postFlagged'];
+    }
+
+    /**
+     * Get the subject line for a notification email.
+     *
+     * @return string
+     */
+    public function getEmailSubject(TranslatorInterface $translator)
+    {
+        return $translator->trans('fof-subscribed.email.subject.postFlagged', [
+            '{username}' => $this->flag->user->display_name,
+            '{title}'    => $this->post->discussion->title,
+        ]);
+    }
+
+    public function getFromUser()
+    {
+        return $this->flag->user;
+    }
+}

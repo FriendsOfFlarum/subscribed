@@ -16,11 +16,7 @@ use Flarum\Api\Serializer\BasicPostSerializer;
 use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Extend;
-use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
-use FoF\Subscribed\Blueprints\PostCreatedBlueprint;
-use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
-use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
-use FoF\Subscribed\Listeners\AddPermissions;
+use FoF\Subscribed\Blueprints;
 
 return [
     (new Extend\Frontend('forum'))
@@ -35,10 +31,11 @@ return [
         ->namespace('fof-subscribed', __DIR__.'/resources/views'),
 
     (new Extend\Notification())
-        ->type(DiscussionCreatedBlueprint::class, BasicDiscussionSerializer::class, [])
-        ->type(PostCreatedBlueprint::class, BasicPostSerializer::class, [])
-        ->type(PostUnapprovedBlueprint::class, BasicPostSerializer::class, [])
-        ->type(UserCreatedBlueprint::class, BasicUserSerializer::class, []),
+        ->type(Blueprints\DiscussionCreatedBlueprint::class, BasicDiscussionSerializer::class, [])
+        ->type(Blueprints\PostCreatedBlueprint::class, BasicPostSerializer::class, [])
+        ->type(Blueprints\PostUnapprovedBlueprint::class, BasicPostSerializer::class, [])
+        ->type(Blueprints\UserCreatedBlueprint::class, BasicUserSerializer::class, [])
+        ->type(Blueprints\PostFlaggedBlueprint::class, BasicPostSerializer::class, []),
 
     (new Extend\ApiSerializer(CurrentUserSerializer::class))
         ->attributes(AddPermissions::class),
@@ -47,5 +44,6 @@ return [
         ->subscribe(Listeners\DiscussionCreated::class)
         ->subscribe(Listeners\PostCreated::class)
         ->subscribe(Listeners\UnapprovedPostCreated::class)
-        ->subscribe(Listeners\UserCreated::class),
+        ->subscribe(Listeners\UserCreated::class)
+        ->subscribe(Listeners\PostWasFlagged::class),
 ];
