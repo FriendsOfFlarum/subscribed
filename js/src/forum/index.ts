@@ -9,17 +9,20 @@ import PostUnapprovedNotification from './notifications/PostUnapprovedNotificati
 import User from 'flarum/common/models/User';
 import Model from 'flarum/common/Model';
 import ItemList from 'flarum/common/utils/ItemList';
+import PostFlaggedNotification from './notifications/PostFlaggedNotification';
 
 app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
   app.notificationComponents.postCreated = PostCreatedNotification;
   app.notificationComponents.userCreated = UserCreatedNotification;
   app.notificationComponents.postUnapproved = PostUnapprovedNotification;
+  app.notificationComponents.postFlagged = PostFlaggedNotification;
 
   User.prototype.canSubscribeDiscussionCreated = Model.attribute('canSubscribeDiscussionCreated');
   User.prototype.canSubscribePostCreated = Model.attribute('canSubscribePostCreated');
   User.prototype.canSubscribePostUnapproved = Model.attribute('canSubscribePostUnapproved');
   User.prototype.canSubscribeUserCreated = Model.attribute('canSubscribeUserCreated');
+  User.prototype.canSubscribePostFlagged = Model.attribute('canSubscribePostFlagged');
 
   extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList) => {
     const currentUser = app.session?.user;
@@ -67,6 +70,18 @@ app.initializers.add('fof-subscribed', () => {
           name: 'userCreated',
           icon: 'fas fa-user-plus',
           label: app.translator.trans('fof-subscribed.forum.settings.notify_user_created_label'),
+        },
+        -10
+      );
+    }
+
+    if (currentUser?.canSubscribePostFlagged()) {
+      items.add(
+        'postFlagged',
+        {
+          name: 'postFlagged',
+          icon: 'fas fa-flag',
+          label: app.translator.trans('fof-subscribed.forum.settings.notify_post_flagged_label'),
         },
         -10
       );
