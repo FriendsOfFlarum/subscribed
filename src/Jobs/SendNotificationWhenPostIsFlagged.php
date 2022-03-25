@@ -23,7 +23,7 @@ class SendNotificationWhenPostIsFlagged extends AbstractJob
     
     public function handle(NotificationSyncer $notifications)
     {
-        $post = $this->flag->post();
+        $post = $this->flag->post;
         $flag = $this->flag;
 
         $notify = User::query()
@@ -31,8 +31,8 @@ class SendNotificationWhenPostIsFlagged extends AbstractJob
             ->where('preferences', 'regexp', new Expression('\'"notify_postFlagged_[a-z]+":true\''))
             ->get();
 
-        $notify = $notify->filter(function (User $recipient) use ($flag) {
-            return $recipient->can('subscribePostFlagged') && $flag->isVisibleTo($recipient);
+        $notify = $notify->filter(function (User $recipient) use ($post) {
+            return $recipient->can('subscribePostFlagged') && $recipient->can('viewFlags', $post->discussion);
         });
 
         $notifications->sync(
