@@ -16,4 +16,8 @@ export default class DiscussionCreatedNotification extends Notification {
   content() {
     return app.translator.trans('fof-subscribed.forum.notifications.discussion_created_text', { user: this.attrs.notification.fromUser() });
   }
+
+  excerpt() {
+    return null;
+  }
 }
