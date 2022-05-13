@@ -39,7 +39,7 @@ app.initializers.add('fof-subscribed', () => {
       {
         icon: 'fas fa-flag',
         label: app.translator.trans('fof-subscribed.admin.permission.subscribe_to_post_flagged'),
-        permission: 'subscribePostFlagged'
+        permission: 'subscribePostFlagged',
       },
       'moderate'
     );
