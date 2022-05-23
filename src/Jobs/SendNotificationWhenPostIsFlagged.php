@@ -36,7 +36,7 @@ class SendNotificationWhenPostIsFlagged extends AbstractJob
         $flag = $this->flag;
 
         $notify = User::query()
-            ->where('users.id', '!=', $flag->actor->id)
+            ->where('users.id', '!=', $flag->user_id)
             ->where('preferences', 'regexp', new Expression('\'"notify_postFlagged_[a-z]+":true\''))
             ->get();
 
