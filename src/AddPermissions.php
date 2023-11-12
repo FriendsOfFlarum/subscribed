@@ -28,9 +28,6 @@ class AddPermissions
         $this->extensions = $extensions;
     }
     
-    /**
-     * @param ForumSerializer $serializer
-     */
     public function __invoke(CurrentUserSerializer $serializer, User $user, array $attributes): array
     {
         $attributes['canSubscribeDiscussionCreated'] = $serializer->getActor()->can('subscribeDiscussionCreated');

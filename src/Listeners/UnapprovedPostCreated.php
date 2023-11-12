@@ -50,6 +50,7 @@ class UnapprovedPostCreated
 
     public function whenPostWasPosted(Posted $event)
     {
+        /** @phpstan-ignore-next-line */
         if ($event->post->is_approved !== false) {
             return;
         }

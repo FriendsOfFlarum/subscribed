@@ -49,6 +49,7 @@ class DiscussionCreated
 
     public function whenDiscussionWasStarted(Started $event)
     {
+        /** @phpstan-ignore-next-line */
         if ($event->discussion->is_approved === false) {
             return;
         }
@@ -60,7 +61,7 @@ class DiscussionCreated
 
     public function whenDiscussionWasApproved(PostWasApproved $event)
     {
-        if ($event->post->number != 1) {
+        if ($event->post->number !== 1) {
             return;
         }
 
