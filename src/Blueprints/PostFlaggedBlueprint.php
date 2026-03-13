@@ -15,6 +15,7 @@ use Flarum\Flags\Flag;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\User\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
@@ -41,7 +42,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSender()
+    public function getSender(): ?User
     {
         return $this->flag->user;
     }

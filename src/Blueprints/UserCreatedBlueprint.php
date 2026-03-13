@@ -34,7 +34,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSender()
+    public function getSender(): User
     {
         return $this->user;
     }

@@ -14,6 +14,7 @@ namespace FoF\Subscribed\Blueprints;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\User\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
@@ -34,7 +35,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSender()
+    public function getSender(): ?User
     {
         return $this->post->user;
     }

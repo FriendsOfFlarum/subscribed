@@ -30,7 +30,7 @@ class SendNotificationWhenPostIsFlagged extends AbstractJob
         $this->flag = $flag;
     }
     
-    public function handle(NotificationSyncer $notifications)
+    public function handle(NotificationSyncer $notifications): void
     {
         $post = $this->flag->post;
         $flag = $this->flag;

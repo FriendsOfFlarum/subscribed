@@ -34,7 +34,7 @@ class SendNotificationWhenUserIsCreated implements ShouldQueue
         $this->user = $user;
     }
 
-    public function handle(NotificationSyncer $notifications)
+    public function handle(NotificationSyncer $notifications): void
     {
         $user = $this->user;
 

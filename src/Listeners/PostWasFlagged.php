@@ -15,6 +15,7 @@ use Flarum\Flags\Event\Created;
 use Flarum\Flags\Event\Deleting;
 use Flarum\Flags\Flag;
 use Flarum\Notification\NotificationSyncer;
+use Flarum\Post\Post;
 use FoF\Subscribed\Blueprints\PostFlaggedBlueprint;
 use FoF\Subscribed\Jobs\SendNotificationWhenPostIsFlagged;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -37,7 +38,7 @@ class PostWasFlagged
     /**
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(Created::class, [$this, 'whenFlagged']);
         $events->listen(Deleting::class, [$this, 'whenFlagDismissed']);
@@ -56,7 +57,7 @@ class PostWasFlagged
         $this->notifications->delete($this->getNotification($event->flag->post, $event->flag));
     }
 
-    protected function getNotification($post, Flag $flag)
+    protected function getNotification(Post $post, Flag $flag): PostFlaggedBlueprint
     {
         return new PostFlaggedBlueprint($post, $flag);
     }

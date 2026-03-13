@@ -37,7 +37,7 @@ class UserCreated
     /**
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(Registered::class, [$this, 'whenUserRegistered']);
         $events->listen(Deleted::class, [$this, 'whenUserWasDeleted']);
@@ -46,7 +46,7 @@ class UserCreated
     /**
      * @param Registered $event
      */
-    public function whenUserRegistered(Registered $event)
+    public function whenUserRegistered(Registered $event): void
     {
         resolve('flarum.queue.connection')->push(
             new SendNotificationWhenUserIsCreated($event->user)
@@ -56,7 +56,7 @@ class UserCreated
     /**
      * @param Deleted $event
      */
-    public function whenUserWasDeleted(Deleted $event)
+    public function whenUserWasDeleted(Deleted $event): void
     {
         $this->notifications->delete($this->getNotification($event->user));
     }
