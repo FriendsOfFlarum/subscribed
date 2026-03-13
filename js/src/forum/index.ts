@@ -18,7 +18,7 @@ app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.postUnapproved = PostUnapprovedNotification;
   app.notificationComponents.postFlagged = PostFlaggedNotification;
 
-  extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList<{ name: string; icon: string; label: any; }>) => {
+  extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList<{ name: string; icon: string; label: any }>) => {
     const currentUser = app.session?.user;
 
     if (currentUser?.canSubscribeDiscussionCreated()) {
