@@ -17,6 +17,10 @@ use Flarum\Api\Serializer\BasicUserSerializer;
 use Flarum\Api\Serializer\CurrentUserSerializer;
 use Flarum\Extend;
 use FoF\Subscribed\Blueprints;
+use Flarum\Api\Context;
+use Flarum\Api\Endpoint;
+use Flarum\Api\Resource;
+use Flarum\Api\Schema;
 
 return [
     (new Extend\Frontend('forum'))
@@ -37,6 +41,7 @@ return [
         ->type(Blueprints\UserCreatedBlueprint::class, [])
         ->type(Blueprints\PostFlaggedBlueprint::class, []),
 
+    // @TODO: Replace with the new implementation https://docs.flarum.org/2.x/extend/api#extending-api-resources
     (new Extend\ApiSerializer(CurrentUserSerializer::class))
         ->attributes(AddPermissions::class),
 
