@@ -41,14 +41,14 @@ class UnapprovedPostCreated
     /**
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(Posted::class, [$this, 'whenPostWasPosted']);
         $events->listen(Deleted::class, [$this, 'whenPostWasDeleted']);
         $events->listen(PostWasApproved::class, [$this, 'whenPostWasApproved']);
     }
 
-    public function whenPostWasPosted(Posted $event)
+    public function whenPostWasPosted(Posted $event): void
     {
         /** @phpstan-ignore-next-line */
         if ($event->post->is_approved !== false) {
@@ -60,12 +60,12 @@ class UnapprovedPostCreated
         );
     }
 
-    public function whenPostWasDeleted(Deleted $event)
+    public function whenPostWasDeleted(Deleted $event): void
     {
         $this->notifications->delete($this->getNotification($event->post));
     }
 
-    public function whenPostWasApproved(PostWasApproved $event)
+    public function whenPostWasApproved(PostWasApproved $event): void
     {
         $this->notifications->delete($this->getNotification($event->post));
     }

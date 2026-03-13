@@ -15,6 +15,7 @@ use Flarum\Discussion\Discussion;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\User\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
@@ -38,7 +39,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     /**
      * {@inheritdoc}
      */
-    public function getSender()
+    public function getSender(): ?User
     {
         return $this->discussion->user;
     }

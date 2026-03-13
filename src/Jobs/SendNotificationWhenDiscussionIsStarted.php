@@ -35,7 +35,7 @@ class SendNotificationWhenDiscussionIsStarted implements ShouldQueue
         $this->discussion = $discussion;
     }
 
-    public function handle(NotificationSyncer $notifications)
+    public function handle(NotificationSyncer $notifications): void
     {
         $discussion = $this->discussion;
 

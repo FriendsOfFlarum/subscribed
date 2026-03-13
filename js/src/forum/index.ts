@@ -6,10 +6,10 @@ import DiscussionCreatedNotification from './notifications/DiscussionCreatedNoti
 import PostCreatedNotification from './notifications/PostCreatedNotification';
 import UserCreatedNotification from './notifications/UserCreatedNotification';
 import PostUnapprovedNotification from './notifications/PostUnapprovedNotification';
-import User from 'flarum/common/models/User';
-import Model from 'flarum/common/Model';
 import ItemList from 'flarum/common/utils/ItemList';
 import PostFlaggedNotification from './notifications/PostFlaggedNotification';
+
+export { default as extend } from './extend';
 
 app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
@@ -18,13 +18,7 @@ app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.postUnapproved = PostUnapprovedNotification;
   app.notificationComponents.postFlagged = PostFlaggedNotification;
 
-  User.prototype.canSubscribeDiscussionCreated = Model.attribute('canSubscribeDiscussionCreated');
-  User.prototype.canSubscribePostCreated = Model.attribute('canSubscribePostCreated');
-  User.prototype.canSubscribePostUnapproved = Model.attribute('canSubscribePostUnapproved');
-  User.prototype.canSubscribeUserCreated = Model.attribute('canSubscribeUserCreated');
-  User.prototype.canSubscribePostFlagged = Model.attribute('canSubscribePostFlagged');
-
-  extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList) => {
+  extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList<{ name: string; icon: string; label: any; }>) => {
     const currentUser = app.session?.user;
 
     if (currentUser?.canSubscribeDiscussionCreated()) {

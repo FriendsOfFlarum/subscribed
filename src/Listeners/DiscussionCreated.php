@@ -39,7 +39,7 @@ class DiscussionCreated
     /**
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(Started::class, [$this, 'whenDiscussionWasStarted']);
         $events->listen(PostWasApproved::class, [$this, 'whenDiscussionWasApproved']);
@@ -47,7 +47,7 @@ class DiscussionCreated
         $events->listen(Restored::class, [$this, 'whenDiscussionWasRestored']);
     }
 
-    public function whenDiscussionWasStarted(Started $event)
+    public function whenDiscussionWasStarted(Started $event): void
     {
         /** @phpstan-ignore-next-line */
         if ($event->discussion->is_approved === false) {
@@ -59,7 +59,7 @@ class DiscussionCreated
         );
     }
 
-    public function whenDiscussionWasApproved(PostWasApproved $event)
+    public function whenDiscussionWasApproved(PostWasApproved $event): void
     {
         if ($event->post->number !== 1) {
             return;
@@ -73,7 +73,7 @@ class DiscussionCreated
     /**
      * @param Deleted $event
      */
-    public function whenDiscussionWasDeleted(Deleted $event)
+    public function whenDiscussionWasDeleted(Deleted $event): void
     {
         $this->notifications->delete($this->getNotification($event->discussion));
     }
@@ -81,7 +81,7 @@ class DiscussionCreated
     /**
      * @param Restored $event
      */
-    public function whenDiscussionWasRestored(Restored $event)
+    public function whenDiscussionWasRestored(Restored $event): void
     {
         $this->notifications->restore($this->getNotification($event->discussion));
     }

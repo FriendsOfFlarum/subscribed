@@ -35,7 +35,7 @@ class SendNotificationWhenPostIsUnapproved implements ShouldQueue
         $this->post = $post;
     }
 
-    public function handle(NotificationSyncer $notifications)
+    public function handle(NotificationSyncer $notifications): void
     {
         $post = $this->post;
 

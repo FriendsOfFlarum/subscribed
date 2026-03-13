@@ -20,12 +20,12 @@ class PostCreated
     /**
      * @param Dispatcher $events
      */
-    public function subscribe(Dispatcher $events)
+    public function subscribe(Dispatcher $events): void
     {
         $events->listen(Posted::class, [$this, 'whenPosted']);
     }
 
-    public function whenPosted(Posted $event)
+    public function whenPosted(Posted $event): void
     {
         // We don't want to notify if this is the first post in a new disccusion, or if the post
         // is not approved.
