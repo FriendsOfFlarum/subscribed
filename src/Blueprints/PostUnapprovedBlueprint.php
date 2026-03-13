@@ -15,8 +15,8 @@ use Flarum\Notification\AlertableInterface;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\Locale\TranslatorInterface;
 use Flarum\User\User;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
@@ -79,7 +79,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface, 
      *
      * @return string
      */
-    public function getEmailSubject(\Flarum\Locale\TranslatorInterface $translator): string
+    public function getEmailSubject(TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.postUnapproved', [
             '{username}' => $this->post->user->display_name,
@@ -87,7 +87,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface, 
         ]);
     }
 
-    public function getFromUser(): ?\Flarum\User\User
+    public function getFromUser(): ?User
     {
         return $this->post->user;
     }

@@ -9,5 +9,5 @@
 ]) !!}
     </x-slot:body>
 
-    <x-slot:preview><!-- Optional content --></x-slot:preview>
+    <x-slot:preview>{{ $blueprint->discussion->title }}</x-slot:preview>
 </x-mail::html.notification>

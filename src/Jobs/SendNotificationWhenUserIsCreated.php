@@ -13,16 +13,12 @@ namespace FoF\Subscribed\Jobs;
 
 use Flarum\Notification\NotificationSyncer;
 use Flarum\User\User;
+use Flarum\Queue\AbstractJob;
 use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Queue\SerializesModels;
 
-class SendNotificationWhenUserIsCreated implements ShouldQueue
+class SendNotificationWhenUserIsCreated extends AbstractJob
 {
-    use Queueable;
-    use SerializesModels;
 
     public function __construct(protected User $user)
     {

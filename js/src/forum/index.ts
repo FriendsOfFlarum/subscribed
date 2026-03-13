@@ -25,7 +25,7 @@ app.initializers.add('fof-subscribed', () => {
         'discussionCreated',
         {
           name: 'discussionCreated',
-          icon: 'fas fa-pencil-alt',
+          icon: 'fas fa-pencil',
           label: app.translator.trans('fof-subscribed.forum.settings.notify_discussion_created_label'),
         },
         5
@@ -37,7 +37,7 @@ app.initializers.add('fof-subscribed', () => {
         'postCreated',
         {
           name: 'postCreated',
-          icon: 'fas fa-pencil-alt',
+          icon: 'fas fa-pencil',
           label: app.translator.trans('fof-subscribed.forum.settings.notify_post_created_label'),
         },
         4
@@ -49,7 +49,7 @@ app.initializers.add('fof-subscribed', () => {
         'postUnapproved',
         {
           name: 'postUnapproved',
-          icon: 'fas fa-check',
+          icon: 'fas fa-hammer',
           label: app.translator.trans('fof-subscribed.forum.settings.notify_post_unapproved_label'),
         },
         -10

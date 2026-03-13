@@ -14,16 +14,12 @@ namespace FoF\Subscribed\Jobs;
 use Flarum\Discussion\Discussion;
 use Flarum\Notification\NotificationSyncer;
 use Flarum\User\User;
+use Flarum\Queue\AbstractJob;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Queue\SerializesModels;
 
-class SendNotificationWhenDiscussionIsStarted implements ShouldQueue
+class SendNotificationWhenDiscussionIsStarted extends AbstractJob
 {
-    use Queueable;
-    use SerializesModels;
 
     public function __construct(protected Discussion $discussion)
     {

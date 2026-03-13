@@ -14,16 +14,12 @@ namespace FoF\Subscribed\Jobs;
 use Flarum\Notification\NotificationSyncer;
 use Flarum\Post\Post;
 use Flarum\User\User;
+use Flarum\Queue\AbstractJob;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Queue\SerializesModels;
 
-class SendNotificationWhenPostIsUnapproved implements ShouldQueue
+class SendNotificationWhenPostIsUnapproved extends AbstractJob
 {
-    use Queueable;
-    use SerializesModels;
 
     public function __construct(protected Post $post)
     {

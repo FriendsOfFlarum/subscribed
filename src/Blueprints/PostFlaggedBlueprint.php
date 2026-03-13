@@ -16,8 +16,8 @@ use Flarum\Flags\Flag;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\Locale\TranslatorInterface;
 use Flarum\User\User;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
@@ -80,7 +80,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface, Ale
      *
      * @return string
      */
-    public function getEmailSubject(\Flarum\Locale\TranslatorInterface $translator): string
+    public function getEmailSubject(TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.postFlagged', [
             '{username}' => $this->flag->user->display_name,
@@ -88,7 +88,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface, Ale
         ]);
     }
 
-    public function getFromUser(): ?\Flarum\User\User
+    public function getFromUser(): ?User
     {
         return $this->flag->user;
     }

@@ -29,7 +29,7 @@ app.initializers.add('fof-subscribed', () => {
     )
     .registerPermission(
       {
-        icon: 'fas fa-gavel',
+        icon: 'fas fa-hammer',
         label: app.translator.trans('fof-subscribed.admin.permission.subscribe_to_post_unapproved'),
         permission: 'subscribePostUnapproved',
       },

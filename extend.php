@@ -11,16 +11,10 @@
 
 namespace FoF\Subscribed;
 
-use Flarum\Api\Serializer\BasicDiscussionSerializer;
-use Flarum\Api\Serializer\BasicPostSerializer;
-use Flarum\Api\Serializer\BasicUserSerializer;
-use Flarum\Api\Serializer\CurrentUserSerializer;
-use Flarum\Extend;
-use FoF\Subscribed\Blueprints;
-use Flarum\Api\Context;
-use Flarum\Api\Endpoint;
 use Flarum\Api\Resource;
-use Flarum\Api\Schema;
+use Flarum\Extend;
+use FoF\Subscribed\Api\UserResourceFields;
+use FoF\Subscribed\Blueprints;
 
 return [
     (new Extend\Frontend('forum'))
@@ -41,9 +35,8 @@ return [
         ->type(Blueprints\UserCreatedBlueprint::class, [])
         ->type(Blueprints\PostFlaggedBlueprint::class, []),
 
-    // @TODO: Replace with the new implementation https://docs.flarum.org/2.x/extend/api#extending-api-resources
-    (new Extend\ApiSerializer(CurrentUserSerializer::class))
-        ->attributes(AddPermissions::class),
+    (new Extend\ApiResource(Resource\UserResource::class))
+        ->fields(UserResourceFields::class),
 
     (new Extend\Event())
         ->subscribe(Listeners\DiscussionCreated::class)

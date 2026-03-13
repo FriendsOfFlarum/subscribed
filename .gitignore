@@ -8,3 +8,5 @@ bower_components
 .idea
 .floo*
 .claude
+tests/.phpunit.cache
+tests/integration/tmp

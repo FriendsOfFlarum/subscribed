@@ -16,8 +16,8 @@ use Flarum\Discussion\Discussion;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\Locale\TranslatorInterface;
 use Flarum\User\User;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
@@ -86,14 +86,14 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      *
      * @return string
      */
-    public function getEmailSubject(\Flarum\Locale\TranslatorInterface $translator): string
+    public function getEmailSubject(TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.newDiscussion', [
             '{title}' => $this->discussion->title,
         ]);
     }
 
-    public function getFromUser(): ?\Flarum\User\User
+    public function getFromUser(): ?User
     {
         return $this->discussion->user;
     }

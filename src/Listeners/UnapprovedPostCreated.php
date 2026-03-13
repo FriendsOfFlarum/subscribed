@@ -19,14 +19,17 @@ use Flarum\Post\Post;
 use FoF\Subscribed\Blueprints\PostUnapprovedBlueprint;
 use FoF\Subscribed\Jobs\SendNotificationWhenPostIsUnapproved;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Queue\Queue;
 
 /**
  * Notify admins of posts that need approval (requires flarum/approval).
  */
 class UnapprovedPostCreated
 {
-    public function __construct(protected NotificationSyncer $notifications)
-    {
+    public function __construct(
+        protected NotificationSyncer $notifications,
+        protected Queue $queue,
+    ) {
     }
 
     /**
@@ -46,9 +49,7 @@ class UnapprovedPostCreated
             return;
         }
 
-        resolve('flarum.queue.connection')->push(
-            new SendNotificationWhenPostIsUnapproved($event->post)
-        );
+        $this->queue->push(new SendNotificationWhenPostIsUnapproved($event->post));
     }
 
     public function whenPostWasDeleted(Deleted $event): void
