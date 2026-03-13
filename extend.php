@@ -11,11 +11,9 @@
 
 namespace FoF\Subscribed;
 
-use Flarum\Api\Serializer\BasicDiscussionSerializer;
-use Flarum\Api\Serializer\BasicPostSerializer;
-use Flarum\Api\Serializer\BasicUserSerializer;
-use Flarum\Api\Serializer\CurrentUserSerializer;
+use Flarum\Api\Resource;
 use Flarum\Extend;
+use FoF\Subscribed\Api\UserResourceFields;
 use FoF\Subscribed\Blueprints;
 
 return [
@@ -31,14 +29,14 @@ return [
         ->namespace('fof-subscribed', __DIR__.'/resources/views'),
 
     (new Extend\Notification())
-        ->type(Blueprints\DiscussionCreatedBlueprint::class, BasicDiscussionSerializer::class, [])
-        ->type(Blueprints\PostCreatedBlueprint::class, BasicPostSerializer::class, [])
-        ->type(Blueprints\PostUnapprovedBlueprint::class, BasicPostSerializer::class, [])
-        ->type(Blueprints\UserCreatedBlueprint::class, BasicUserSerializer::class, [])
-        ->type(Blueprints\PostFlaggedBlueprint::class, BasicPostSerializer::class, []),
+        ->type(Blueprints\DiscussionCreatedBlueprint::class, [])
+        ->type(Blueprints\PostCreatedBlueprint::class, [])
+        ->type(Blueprints\PostUnapprovedBlueprint::class, [])
+        ->type(Blueprints\UserCreatedBlueprint::class, [])
+        ->type(Blueprints\PostFlaggedBlueprint::class, []),
 
-    (new Extend\ApiSerializer(CurrentUserSerializer::class))
-        ->attributes(AddPermissions::class),
+    (new Extend\ApiResource(Resource\UserResource::class))
+        ->fields(UserResourceFields::class),
 
     (new Extend\Event())
         ->subscribe(Listeners\DiscussionCreated::class)

@@ -20,20 +20,14 @@ use Flarum\Notification\NotificationSyncer;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
 use FoF\Subscribed\Jobs\SendNotificationWhenDiscussionIsStarted;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Queue\Queue;
 
 class DiscussionCreated
 {
-    /**
-     * @var NotificationSyncer
-     */
-    protected $notifications;
-
-    /**
-     * @param NotificationSyncer $notifications
-     */
-    public function __construct(NotificationSyncer $notifications)
-    {
-        $this->notifications = $notifications;
+    public function __construct(
+        protected NotificationSyncer $notifications,
+        protected Queue $queue,
+    ) {
     }
 
     /**
@@ -54,9 +48,7 @@ class DiscussionCreated
             return;
         }
 
-        resolve('flarum.queue.connection')->push(
-            new SendNotificationWhenDiscussionIsStarted($event->discussion)
-        );
+        $this->queue->push(new SendNotificationWhenDiscussionIsStarted($event->discussion));
     }
 
     public function whenDiscussionWasApproved(PostWasApproved $event): void
@@ -65,9 +57,7 @@ class DiscussionCreated
             return;
         }
 
-        resolve('flarum.queue.connection')->push(
-            new SendNotificationWhenDiscussionIsStarted($event->post->discussion)
-        );
+        $this->queue->push(new SendNotificationWhenDiscussionIsStarted($event->post->discussion));
     }
 
     /**

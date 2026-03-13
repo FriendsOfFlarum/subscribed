@@ -11,28 +11,23 @@
 
 namespace FoF\Subscribed\Blueprints;
 
+use Flarum\Notification\AlertableInterface;
 use Flarum\Discussion\Discussion;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\Locale\TranslatorInterface;
 use Flarum\User\User;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface
+class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
-    /**
-     * @var Discussion
-     */
-    public $discussion;
-
     /**
      * @var Post
      */
     public $post;
 
-    public function __construct(Discussion $discussion, Post $post = null)
+    public function __construct(public Discussion $discussion, ?Post $post = null)
     {
-        $this->discussion = $discussion;
         $this->post = $post ?? $discussion->firstPost;
     }
 
@@ -47,7 +42,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     /**
      * {@inheritdoc}
      */
-    public function getSubject()
+    public function getSubject(): ?\Flarum\Database\AbstractModel
     {
         return $this->discussion;
     }
@@ -55,14 +50,15 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): mixed
     {
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getType()
+    public static function getType(): string
     {
         return 'discussionCreated';
     }
@@ -70,7 +66,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
     /**
      * {@inheritdoc}
      */
-    public static function getSubjectModel()
+    public static function getSubjectModel(): string
     {
         return Discussion::class;
     }
@@ -80,9 +76,9 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      *
      * @return array
      */
-    public function getEmailView()
+    public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.discussionCreated'];
+        return ['text' => 'fof-subscribed::email.plain.discussionCreated', 'html' => 'fof-subscribed::email.html.discussionCreated'];
     }
 
     /**
@@ -90,14 +86,14 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      *
      * @return string
      */
-    public function getEmailSubject(TranslatorInterface $translator)
+    public function getEmailSubject(TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.newDiscussion', [
             '{title}' => $this->discussion->title,
         ]);
     }
 
-    public function getFromUser()
+    public function getFromUser(): ?User
     {
         return $this->discussion->user;
     }

@@ -18,20 +18,14 @@ use Flarum\User\User;
 use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
 use FoF\Subscribed\Jobs\SendNotificationWhenUserIsCreated;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Queue\Queue;
 
 class UserCreated
 {
-    /**
-     * @var NotificationSyncer
-     */
-    protected $notifications;
-
-    /**
-     * @param NotificationSyncer $notifications
-     */
-    public function __construct(NotificationSyncer $notifications)
-    {
-        $this->notifications = $notifications;
+    public function __construct(
+        protected NotificationSyncer $notifications,
+        protected Queue $queue,
+    ) {
     }
 
     /**
@@ -48,9 +42,7 @@ class UserCreated
      */
     public function whenUserRegistered(Registered $event): void
     {
-        resolve('flarum.queue.connection')->push(
-            new SendNotificationWhenUserIsCreated($event->user)
-        );
+        $this->queue->push(new SendNotificationWhenUserIsCreated($event->user));
     }
 
     /**

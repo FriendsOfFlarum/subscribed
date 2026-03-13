@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../vendor/phpunit/phpunit/phpunit.xsd"
+    backupGlobals="false"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
+    colors="true"
+    stopOnFailure="false"
+    bootstrap="../vendor/autoload.php"
+>
+    <source>
+        <include>
+            <directory suffix=".php">../src/</directory>
+        </include>
+    </source>
+    <testsuites>
+        <testsuite name="FoF Subscribed Unit Tests">
+            <directory suffix="Test.php">./unit</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

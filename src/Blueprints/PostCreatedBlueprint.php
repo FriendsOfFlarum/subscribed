@@ -11,25 +11,17 @@
 
 namespace FoF\Subscribed\Blueprints;
 
+use Flarum\Notification\AlertableInterface;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
+use Flarum\Locale\TranslatorInterface;
 use Flarum\User\User;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
-class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
+class PostCreatedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
-    /**
-     * @var Post
-     */
-    public $post;
-
-    /**
-     * @param Post $post
-     */
-    public function __construct(Post $post)
+    public function __construct(public Post $post)
     {
-        $this->post = $post;
     }
 
     /**
@@ -43,7 +35,7 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSubject()
+    public function getSubject(): ?\Flarum\Database\AbstractModel
     {
         return $this->post;
     }
@@ -51,14 +43,15 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): mixed
     {
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getType()
+    public static function getType(): string
     {
         return 'postCreated';
     }
@@ -66,7 +59,7 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubjectModel()
+    public static function getSubjectModel(): string
     {
         return Post::class;
     }
@@ -76,9 +69,9 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return array
      */
-    public function getEmailView()
+    public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.postCreated'];
+        return ['text' => 'fof-subscribed::email.plain.postCreated', 'html' => 'fof-subscribed::email.html.postCreated'];
     }
 
     /**
@@ -86,7 +79,7 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return string
      */
-    public function getEmailSubject(TranslatorInterface $translator)
+    public function getEmailSubject(TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.postCreated', [
             '{username}' => $this->post->user->display_name,
@@ -94,7 +87,7 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface
         ]);
     }
 
-    public function getFromUser()
+    public function getFromUser(): ?User
     {
         return $this->post->user;
     }

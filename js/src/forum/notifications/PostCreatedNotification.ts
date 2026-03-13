@@ -6,7 +6,7 @@ import type Mithril from 'mithril';
 
 export default class PostCreatedNotification extends Notification {
   icon(): string {
-    return 'fas fa-edit';
+    return 'fas fa-pen-to-square';
   }
 
   href(): string {

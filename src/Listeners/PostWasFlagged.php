@@ -19,22 +19,16 @@ use Flarum\Post\Post;
 use FoF\Subscribed\Blueprints\PostFlaggedBlueprint;
 use FoF\Subscribed\Jobs\SendNotificationWhenPostIsFlagged;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Queue\Queue;
 
 class PostWasFlagged
 {
-    /**
-     * @var NotificationSyncer
-     */
-    protected $notifications;
-
-    /**
-     * @param NotificationSyncer $notifications
-     */
-    public function __construct(NotificationSyncer $notifications)
-    {
-        $this->notifications = $notifications;
+    public function __construct(
+        protected NotificationSyncer $notifications,
+        protected Queue $queue,
+    ) {
     }
-    
+
     /**
      * @param Dispatcher $events
      */
@@ -43,12 +37,10 @@ class PostWasFlagged
         $events->listen(Created::class, [$this, 'whenFlagged']);
         $events->listen(Deleting::class, [$this, 'whenFlagDismissed']);
     }
-    
+
     public function whenFlagged(Created $event): void
     {
-        resolve('flarum.queue.connection')->push(
-            new SendNotificationWhenPostIsFlagged($event->flag)
-        );
+        $this->queue->push(new SendNotificationWhenPostIsFlagged($event->flag));
     }
 
     public function whenFlagDismissed(Deleting $event): void

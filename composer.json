@@ -30,7 +30,7 @@
         }
     ],
     "require": {
-        "flarum/core": "^1.8.0"
+        "flarum/core": "^2.0.0"
     },
     "replace": {
         "flagrow/subscribed": "*"
@@ -49,13 +49,13 @@
                 "flarum/flags"
             ]
         },
-        "flagrow": {
-            "discuss": "https://discuss.flarum.org/d/20917"
-        },
         "flarum-cli": {
             "modules": {
                 "githubActions": true
             }
+        },
+        "branch-alias": {
+            "dev-2.x": "2.x-dev"
         }
     },
     "autoload": {
@@ -63,16 +63,35 @@
             "FoF\\Subscribed\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "FoF\\Subscribed\\Tests\\": "tests/"
+        }
+    },
     "require-dev": {
-        "flarum/phpstan": "*",
+        "flarum/phpstan": "^2.0.0",
+        "flarum/testing": "^2.0",
         "flarum/flags": "*",
         "flarum/approval": "*"
     },
     "scripts": {
         "analyse:phpstan": "phpstan analyse",
-        "clear-cache:phpstan": "phpstan clear-result-cache"
+        "clear-cache:phpstan": "phpstan clear-result-cache",
+        "test": [
+            "@test:unit",
+            "@test:integration"
+        ],
+        "test:unit": "phpunit -c tests/phpunit.unit.xml",
+        "test:integration": "phpunit -c tests/phpunit.integration.xml",
+        "test:setup": "@php tests/integration/setup.php"
     },
     "scripts-descriptions": {
-        "analyse:phpstan": "Run static analysis"
-    }
+        "analyse:phpstan": "Run static analysis",
+        "test": "Run all tests",
+        "test:unit": "Run unit tests",
+        "test:integration": "Run integration tests",
+        "test:setup": "Set up the integration test database"
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true
 }

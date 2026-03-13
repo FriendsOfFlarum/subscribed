@@ -6,7 +6,7 @@ import type Mithril from 'mithril';
 
 export default class PostUnapprovedNotification extends Notification {
   icon(): string {
-    return 'fas fa-gavel';
+    return 'fas fa-hammer';
   }
 
   href(): string {

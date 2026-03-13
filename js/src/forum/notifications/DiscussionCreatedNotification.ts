@@ -6,7 +6,7 @@ import type Mithril from 'mithril';
 export default class DiscussionCreatedNotification extends Notification {
   icon(): string {
     // Same as create discussion button on purpose.
-    return 'fas fa-edit';
+    return 'fas fa-pen-to-square';
   }
 
   href(): string {
