@@ -1,6 +1,5 @@
 import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
-import NotificationGrid from 'flarum/forum/components/NotificationGrid';
 
 import DiscussionCreatedNotification from './notifications/DiscussionCreatedNotification';
 import PostCreatedNotification from './notifications/PostCreatedNotification';
@@ -18,7 +17,7 @@ app.initializers.add('fof-subscribed', () => {
   app.notificationComponents.postUnapproved = PostUnapprovedNotification;
   app.notificationComponents.postFlagged = PostFlaggedNotification;
 
-  extend(NotificationGrid.prototype, 'notificationTypes', (items: ItemList<{ name: string; icon: string; label: any }>) => {
+  extend('flarum/forum/components/NotificationGrid', 'notificationTypes', (items: ItemList<{ name: string; icon: string; label: any }>) => {
     const currentUser = app.session?.user;
 
     if (currentUser?.canSubscribeDiscussionCreated()) {
