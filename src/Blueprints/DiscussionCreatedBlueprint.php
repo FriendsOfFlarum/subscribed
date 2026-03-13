@@ -78,7 +78,7 @@ class DiscussionCreatedBlueprint implements BlueprintInterface, MailableInterfac
      */
     public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.discussionCreated'];
+        return ['text' => 'fof-subscribed::email.plain.discussionCreated', 'html' => 'fof-subscribed::email.html.discussionCreated'];
     }
 
     /**

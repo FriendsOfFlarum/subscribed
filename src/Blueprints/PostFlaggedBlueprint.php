@@ -72,7 +72,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface, Ale
      */
     public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.postFlagged'];
+        return ['text' => 'fof-subscribed::email.plain.postFlagged', 'html' => 'fof-subscribed::email.html.postFlagged'];
     }
 
     /**

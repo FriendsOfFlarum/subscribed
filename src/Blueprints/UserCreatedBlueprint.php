@@ -70,7 +70,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface, Ale
      */
     public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.userCreated'];
+        return ['text' => 'fof-subscribed::email.plain.userCreated', 'html' => 'fof-subscribed::email.html.userCreated'];
     }
 
     /**

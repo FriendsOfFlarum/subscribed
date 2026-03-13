@@ -71,7 +71,7 @@ class PostCreatedBlueprint implements BlueprintInterface, MailableInterface, Ale
      */
     public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.postCreated'];
+        return ['text' => 'fof-subscribed::email.plain.postCreated', 'html' => 'fof-subscribed::email.html.postCreated'];
     }
 
     /**

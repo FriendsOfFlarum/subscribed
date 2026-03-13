@@ -71,7 +71,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface, 
      */
     public function getEmailViews(): array
     {
-        return ['text' => 'fof-subscribed::emails.postUnapproved'];
+        return ['text' => 'fof-subscribed::email.plain.postUnapproved', 'html' => 'fof-subscribed::email.html.postUnapproved'];
     }
 
     /**
