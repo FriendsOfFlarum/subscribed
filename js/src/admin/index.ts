@@ -1,7 +1,7 @@
 import app from 'flarum/admin/app';
 
 app.initializers.add('fof-subscribed', () => {
-  app.extensionData
+  app.registry
     .for('fof-subscribed')
     .registerPermission(
       {
