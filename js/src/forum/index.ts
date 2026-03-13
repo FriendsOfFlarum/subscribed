@@ -1,22 +1,10 @@
 import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
-
-import DiscussionCreatedNotification from './notifications/DiscussionCreatedNotification';
-import PostCreatedNotification from './notifications/PostCreatedNotification';
-import UserCreatedNotification from './notifications/UserCreatedNotification';
-import PostUnapprovedNotification from './notifications/PostUnapprovedNotification';
 import ItemList from 'flarum/common/utils/ItemList';
-import PostFlaggedNotification from './notifications/PostFlaggedNotification';
 
 export { default as extend } from './extend';
 
 app.initializers.add('fof-subscribed', () => {
-  app.notificationComponents.discussionCreated = DiscussionCreatedNotification;
-  app.notificationComponents.postCreated = PostCreatedNotification;
-  app.notificationComponents.userCreated = UserCreatedNotification;
-  app.notificationComponents.postUnapproved = PostUnapprovedNotification;
-  app.notificationComponents.postFlagged = PostFlaggedNotification;
-
   extend('flarum/forum/components/NotificationGrid', 'notificationTypes', (items: ItemList<{ name: string; icon: string; label: any }>) => {
     const currentUser = app.session?.user;
 
