@@ -18,14 +18,8 @@ use Flarum\User\User;
 
 class AddPermissions
 {
-    /**
-     * @var ExtensionManager
-     */
-    protected $extensions;
-    
-    public function __construct(ExtensionManager $extensions)
+    public function __construct(protected ExtensionManager $extensions)
     {
-        $this->extensions = $extensions;
     }
     
     public function __invoke(CurrentUserSerializer $serializer, User $user, array $attributes): array

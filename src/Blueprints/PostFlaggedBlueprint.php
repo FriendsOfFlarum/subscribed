@@ -11,6 +11,7 @@
 
 namespace FoF\Subscribed\Blueprints;
 
+use Flarum\Notification\AlertableInterface;
 use Flarum\Flags\Flag;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
@@ -18,25 +19,10 @@ use Flarum\Post\Post;
 use Flarum\User\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
+class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
-    /**
-     * @var Post
-     */
-    public $post;
-
-    /**
-     * @var Flag
-     */
-    public $flag;
-
-    /**
-     * @param Post $post
-     */
-    public function __construct(Post $post, Flag $flag)
+    public function __construct(public Post $post, public Flag $flag)
     {
-        $this->post = $post;
-        $this->flag = $flag;
     }
 
     /**
@@ -50,7 +36,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSubject()
+    public function getSubject(): ?\Flarum\Database\AbstractModel
     {
         return $this->post;
     }
@@ -58,14 +44,15 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): mixed
     {
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getType()
+    public static function getType(): string
     {
         return 'postFlagged';
     }
@@ -73,7 +60,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubjectModel()
+    public static function getSubjectModel(): string
     {
         return Post::class;
     }
@@ -83,7 +70,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return array
      */
-    public function getEmailView()
+    public function getEmailViews(): array
     {
         return ['text' => 'fof-subscribed::emails.postFlagged'];
     }
@@ -93,7 +80,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return string
      */
-    public function getEmailSubject(TranslatorInterface $translator)
+    public function getEmailSubject(\Flarum\Locale\TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.postFlagged', [
             '{username}' => $this->flag->user->display_name,
@@ -101,7 +88,7 @@ class PostFlaggedBlueprint implements BlueprintInterface, MailableInterface
         ]);
     }
 
-    public function getFromUser()
+    public function getFromUser(): ?\Flarum\User\User
     {
         return $this->flag->user;
     }

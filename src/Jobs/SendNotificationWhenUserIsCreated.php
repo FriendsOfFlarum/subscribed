@@ -24,14 +24,8 @@ class SendNotificationWhenUserIsCreated implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    /**
-     * @var User
-     */
-    protected $user;
-
-    public function __construct(User $user)
+    public function __construct(protected User $user)
     {
-        $this->user = $user;
     }
 
     public function handle(NotificationSyncer $notifications): void

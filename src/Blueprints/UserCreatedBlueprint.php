@@ -11,24 +11,16 @@
 
 namespace FoF\Subscribed\Blueprints;
 
+use Flarum\Notification\AlertableInterface;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\User\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
+class UserCreatedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
-    /**
-     * @var User
-     */
-    public $user;
-
-    /**
-     * @param User $user
-     */
-    public function __construct(User $user)
+    public function __construct(public User $user)
     {
-        $this->user = $user;
     }
 
     /**
@@ -42,7 +34,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSubject()
+    public function getSubject(): ?\Flarum\Database\AbstractModel
     {
         return $this->user;
     }
@@ -50,14 +42,15 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): mixed
     {
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getType()
+    public static function getType(): string
     {
         return 'userCreated';
     }
@@ -65,7 +58,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubjectModel()
+    public static function getSubjectModel(): string
     {
         return User::class;
     }
@@ -75,7 +68,7 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return array
      */
-    public function getEmailView()
+    public function getEmailViews(): array
     {
         return ['text' => 'fof-subscribed::emails.userCreated'];
     }
@@ -85,14 +78,14 @@ class UserCreatedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return string
      */
-    public function getEmailSubject(TranslatorInterface $translator)
+    public function getEmailSubject(\Flarum\Locale\TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.newUser', [
             '{username}' => $this->user->display_name,
         ]);
     }
 
-    public function getFromUser()
+    public function getFromUser(): ?\Flarum\User\User
     {
         return $this->user;
     }

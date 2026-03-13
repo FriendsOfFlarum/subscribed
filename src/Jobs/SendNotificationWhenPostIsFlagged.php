@@ -20,14 +20,8 @@ use Illuminate\Database\Query\Expression;
 
 class SendNotificationWhenPostIsFlagged extends AbstractJob
 {
-    /**
-     * @var Flag
-     */
-    protected $flag;
-
-    public function __construct(Flag $flag)
+    public function __construct(protected Flag $flag)
     {
-        $this->flag = $flag;
     }
     
     public function handle(NotificationSyncer $notifications): void

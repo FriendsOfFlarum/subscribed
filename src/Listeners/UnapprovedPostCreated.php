@@ -25,17 +25,8 @@ use Illuminate\Contracts\Events\Dispatcher;
  */
 class UnapprovedPostCreated
 {
-    /**
-     * @var NotificationSyncer
-     */
-    protected $notifications;
-
-    /**
-     * @param NotificationSyncer $notifications
-     */
-    public function __construct(NotificationSyncer $notifications)
+    public function __construct(protected NotificationSyncer $notifications)
     {
-        $this->notifications = $notifications;
     }
 
     /**

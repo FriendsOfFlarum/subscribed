@@ -11,25 +11,17 @@
 
 namespace FoF\Subscribed\Blueprints;
 
+use Flarum\Notification\AlertableInterface;
 use Flarum\Notification\Blueprint\BlueprintInterface;
 use Flarum\Notification\MailableInterface;
 use Flarum\Post\Post;
 use Flarum\User\User;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
+class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface, AlertableInterface
 {
-    /**
-     * @var Post
-     */
-    public $post;
-
-    /**
-     * @param Post $post
-     */
-    public function __construct(Post $post)
+    public function __construct(public Post $post)
     {
-        $this->post = $post;
     }
 
     /**
@@ -43,7 +35,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getSubject()
+    public function getSubject(): ?\Flarum\Database\AbstractModel
     {
         return $this->post;
     }
@@ -51,14 +43,15 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public function getData()
+    public function getData(): mixed
     {
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function getType()
+    public static function getType(): string
     {
         return 'postUnapproved';
     }
@@ -66,7 +59,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
     /**
      * {@inheritdoc}
      */
-    public static function getSubjectModel()
+    public static function getSubjectModel(): string
     {
         return Post::class;
     }
@@ -76,7 +69,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return array
      */
-    public function getEmailView()
+    public function getEmailViews(): array
     {
         return ['text' => 'fof-subscribed::emails.postUnapproved'];
     }
@@ -86,7 +79,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
      *
      * @return string
      */
-    public function getEmailSubject(TranslatorInterface $translator)
+    public function getEmailSubject(\Flarum\Locale\TranslatorInterface $translator): string
     {
         return $translator->trans('fof-subscribed.email.subject.postUnapproved', [
             '{username}' => $this->post->user->display_name,
@@ -94,7 +87,7 @@ class PostUnapprovedBlueprint implements BlueprintInterface, MailableInterface
         ]);
     }
 
-    public function getFromUser()
+    public function getFromUser(): ?\Flarum\User\User
     {
         return $this->post->user;
     }
