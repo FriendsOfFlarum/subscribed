@@ -15,10 +15,11 @@ use Flarum\Notification\NotificationSyncer;
 use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
 use FoF\Subscribed\Blueprints\UserCreatedBlueprint;
-use Illuminate\Database\Query\Expression;
+use FoF\Subscribed\Jobs\Concerns\FindsSubscribedUsers;
 
 class SendNotificationWhenUserIsCreated extends AbstractJob
 {
+    use FindsSubscribedUsers;
 
     public function __construct(protected User $user)
     {
@@ -28,11 +29,10 @@ class SendNotificationWhenUserIsCreated extends AbstractJob
     {
         $user = $this->user;
 
-        $notify = User::query()
+        $notify = $this->subscribedUsers('userCreated', User::query()
             ->where('users.id', '!=', $user->id)
             ->where('users.is_email_confirmed', '=', 1)
-            ->where('preferences', 'regexp', new Expression('\'"notify_userCreated_[a-z]+":true\''))
-            ->get();
+        );
 
         $notify = $notify->filter(function (User $recipient) {
             return $recipient->can('subscribeUserCreated');

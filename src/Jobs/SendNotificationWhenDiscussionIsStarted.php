@@ -16,10 +16,11 @@ use Flarum\Notification\NotificationSyncer;
 use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
 use FoF\Subscribed\Blueprints\DiscussionCreatedBlueprint;
-use Illuminate\Database\Query\Expression;
+use FoF\Subscribed\Jobs\Concerns\FindsSubscribedUsers;
 
 class SendNotificationWhenDiscussionIsStarted extends AbstractJob
 {
+    use FindsSubscribedUsers;
 
     public function __construct(protected Discussion $discussion)
     {
@@ -29,10 +30,9 @@ class SendNotificationWhenDiscussionIsStarted extends AbstractJob
     {
         $discussion = $this->discussion;
 
-        $notify = User::query()
+        $notify = $this->subscribedUsers('discussionCreated', User::query()
             ->where('users.id', '!=', $discussion->user_id)
-            ->where('preferences', 'regexp', new Expression('\'"notify_discussionCreated_[a-z]+":true\''))
-            ->get();
+        );
 
         $notify = $notify->filter(function (User $recipient) use ($discussion) {
             return $recipient->can('subscribeDiscussionCreated') && $discussion->newQuery()->whereVisibleTo($recipient)->find($discussion->id) && !$discussion->stateFor($recipient)->last_read_post_number;
