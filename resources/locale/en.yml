@@ -78,3 +78,13 @@ fof-subscribed:
 
                 To view this post, check out the following link:
                 {post_url}
+
+core:
+  email:
+    notification:
+      types:
+        discussionCreated: New discussions
+        postCreated: New posts and replies
+        postFlagged: Newly flagged posts
+        postUnapproved: Posts awaiting approval
+        userCreated: New user registrations
