@@ -16,10 +16,12 @@ use Flarum\Post\Post;
 use Flarum\User\User;
 use Flarum\Queue\AbstractJob;
 use FoF\Subscribed\Blueprints\PostCreatedBlueprint;
-use Illuminate\Database\Query\Expression;
+use FoF\Subscribed\Jobs\Concerns\FiltersBySubscription;
+use Illuminate\Database\Eloquent\Builder;
 
 class SendNotificationWhenPostIsCreated extends AbstractJob
 {
+    use FiltersBySubscription;
 
     public function __construct(protected Post $post)
     {
@@ -31,7 +33,7 @@ class SendNotificationWhenPostIsCreated extends AbstractJob
 
         $notify = User::query()
             ->where('users.id', '!=', $post->user_id)
-            ->where('preferences', 'regexp', new Expression('\'"notify_postCreated_[a-z]+":true\''))
+            ->tap(fn (Builder $query) => $this->whereSubscribedTo($query, 'postCreated'))
             ->get();
 
         $notify = $notify->filter(function (User $recipient) use ($post) {
