@@ -28,10 +28,16 @@ fof-subscribed:
             postUnapproved: "[Subscribed | Unapproved] {username} posted in {title}"
             postCreated: "[Subscribed | New Post] {username} wrote a new post in {title}"
             postFlagged: "[Subscribed | New Flag] {username} flagged a post in {title}"
+        # HTML emails: Markdown, converted by the mail formatter. The post itself is shown in the preview box.
+        html:
+            newDiscussion: "{actor_display_name} started a new discussion: [{discussion_title}]({discussion_url})"
+            newUser: "{actor_display_name} just joined {forum_url}. [View their profile]({user_url})"
+            postUnapproved: "{actor_display_name} created a post that wasn't automatically approved in [{discussion_title}]({post_url})"
+            postCreated: "{actor_display_name} just created a new post in [{discussion_title}]({post_url})"
+            postFlagged: "{actor_display_name} just flagged a post in [{discussion_title}]({post_url})"
+        # Plain-text emails.
         body:
             newDiscussion: |
-                Hey {recipient_display_name},
-
                 {actor_display_name} started a new discussion: {discussion_title}
 
                 To view this new discussion, check out the following link:
@@ -41,15 +47,11 @@ fof-subscribed:
 
                 {post_content}
             newUser: |
-                Hey {recipient_display_name},
-
                 {actor_display_name} just joined {forum_url}.
 
                 To view this new user's profile, check out the following link:
                 {user_url}
             postUnapproved: |
-                Hey {recipient_display_name},
-
                 {actor_display_name} created a post that wasn't automatically approved in {discussion_title}
 
                 To view this new post, check out the following link:
@@ -60,8 +62,6 @@ fof-subscribed:
                 {post_content}
 
             postCreated: |
-                Hey {recipient_display_name},
-
                 {actor_display_name} just created a new post in {discussion_title}
 
                 To view this new post, check out the following link:
@@ -72,8 +72,6 @@ fof-subscribed:
                 {post_content}
             
             postFlagged: |
-                Hey {recipient_display_name},
-
                 {actor_display_name} just flagged a post in {discussion_title}
 
                 To view this post, check out the following link:

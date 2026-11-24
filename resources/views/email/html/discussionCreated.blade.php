@@ -1,13 +1,15 @@
 <x-mail::html.notification>
     <x-slot:body>
-        {!! $translator->trans('fof-subscribed.email.body.newDiscussion', [
-    '{recipient_display_name}' => $user->display_name,
-    '{actor_display_name}' => $blueprint->discussion->user->display_name,
-    '{discussion_title}' => $blueprint->discussion->title,
-    '{discussion_url}' => $url->to('forum')->route('discussion', ['id' => $blueprint->discussion->id]),
-    '{post_content}' => $blueprint->post->content,
-]) !!}
+        {!! $formatter->convert($translator->trans('fof-subscribed.email.html.newDiscussion', [
+            '{actor_display_name}' => $blueprint->discussion->user->display_name,
+            '{discussion_title}' => $blueprint->discussion->title,
+            '{discussion_url}' => $url->to('forum')->route('discussion', ['id' => $blueprint->discussion->id]),
+        ])) !!}
     </x-slot:body>
 
-    <x-slot:preview>{{ $blueprint->discussion->title }}</x-slot:preview>
+    @if ($blueprint->post)
+        <x-slot:preview>
+            {!! $blueprint->post->formatContent() !!}
+        </x-slot:preview>
+    @endif
 </x-mail::html.notification>
